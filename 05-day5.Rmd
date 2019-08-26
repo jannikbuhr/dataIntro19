@@ -1,0 +1,112 @@
+# Folgt {#day5}
+
+```{r}
+## linear regression on RNA decay data:
+# RNA levels decrease after transcription was shut down with Actinomycin D:
+
+# As a scatter plot:
+
+# lm() produces a "linear model":
+
+
+# from the model, we get the intercept and the slope of the regression line.
+# The first coefficient is the intercept, the second the slope:
+
+
+## correlation coefficients of IP data:
+# How good is the correlation between biological replicates? 
+# (= How reproducible was the experiment?)
+
+
+# Should we log-transform the data?
+
+
+# Get Pearson's R:
+
+
+# How is the correlation between conditions compared to the correlation between 
+# replicates? (= How much information is in the data?)
+
+
+# adding points to a scatter plot
+
+
+## Relationship between regression and correlation:
+# R squared is symmetrical and the same as the square of Pearson`s R 
+
+# If both standard deviations are identical, the slope of the regression line
+# is the same as Pearson's R.
+# We standardize the data by subtracting the mean and dividing by the standard deviation:
+
+# Now, Pearson's R and the slope of the regression are identical:
+
+# lm() is now symmetric:
+
+
+## Testing correlation coefficients:
+# How do we calculate a p-value for correlation coefficients?
+# Let's simulate the behaviour of Pearson's R if there is NO CORRELATION:
+
+
+# We break the relationship between a and b by shuffling the values randomly:
+
+# Are correlation coefficients always normally distributed, or is there a connection to sample size?
+# Let's decrease sample size (n):
+
+# Pearson's R follows something like a t-distribution, 
+# after this transformation:
+
+
+## Exercises:
+# 1a. Open example6.csv and plot y against x.
+
+# b. Add a regression line and calculate Pearson‘s
+# correlation coefficient.
+
+# c. Compare to the Spearman correlation coefficient.
+
+# d. Remove the last data point of x and y. How does this
+# change the result of a - c?
+
+# 2. File example7.csv contains the number of stork pairs and the
+# birth rate (x 10^3 / year) of 17 countries in 1990. (Source: Teaching Statistics, Volume 22 ).
+# 2a. Produce a scatter plot and add a regression line. 
+# 2b. Calculate Pearson`s correlation coefficient and Spearman`s correlation coefficient 
+# for the data as they are and after log-transformation. 
+# How does the log-transformation affect the
+# correlation coefficients?
+# 2c. Perform a permutation test on Pearson's R of the data 
+# (without log-transformation).
+
+
+# 3. The file example8.csv contains transcriptome-wide mRNA half life measurements and
+# four different properties of the mRNAs: Information about the AREScore, 5‘UTR, ORF
+# and 3‘UTR length.
+# Which of these properties has a significant correlation with half life?
+
+# a. Plot the different mRNA properties against mRNA half-lives. Calculate the respective
+# correlation coefficients. When would you choose Pearson`s and when would you choose
+# Spearman`s method? When would you log-transform the data? Check for normal or log-
+#  normal distribution!
+
+# b. Plot the half life against the property that shows the best correlation with half-life and
+# add a regression line to your plot.
+
+# c. Two weeks ago, you were able to show a significant positive association between
+# AREScore and conserved as well as not-conserved CDEs. Correlate AREScore and 3‘UTR
+# length. In addition, make a boxplot showing the 3‘UTR lengths of genes with no CDE, a
+# CDE in the ORF, a CDE that is not-conserved and a conserved CDE. What would you
+# conclude?
+
+## Homework:
+# Show the admission rate of the 6 departments in UCBAdmissions
+# (y-axis) versus the proportion of female applicants (x-axis) of
+# UCBAdmissions as a scatter plot. Add a regression line.
+# Calculate a correlation coefficient. Standardize the data and show
+# that Pearson‘s correlation coefficient and the slope of the
+# regression line are identical now.
+
+
+
+```
+

@@ -1,0 +1,139 @@
+--- 
+title: "Einführung in die Datenauswertung mit R"
+author: "Jannik Buhr"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: ["references.bib", "book.bib", "packages.bib"]
+csl: chicago-author-date-de.csl
+link-citations: true
+description: "Datenauswertung für Biochemiker, eine Einführung mit R"
+---
+
+# Prolog {-}
+
+## Vorbereitung auf den Kurs
+
+Der Kurs wird zwar auf Deutsch stattfinden, aber ich kann nicht garantieren, dass
+nicht einige Konzepte in diesem Buch dennoch auf Englisch erklärt werden,
+da die verwendeten Fachbegriffe es ohnehin schon bereits sind. Eine Übersetzung würde
+daher nur mehr Verwirrung stiften. Zudem findet sich auf Englisch die meiste Lektüre und das Googlen von Fehlermeldungen wird erheblich erleichtert, da mehr Leute im
+Internet auf Englisch unterwegs sind als auf Deutsch.
+
+Hier findet ihr Links zu R und RStudio, damit ihr
+beides bereits auf euren Laptops oder Computern installieren könnt.
+Persönlich empfehle ich das Arbeiten am eigenen Gerät, aber
+für alle, die keine Laptops besitzen oder mitbringen
+möchten, werden Computer (Mac) zur Verfügung stehen.
+
+- R: [https://cran.r-project.org/](https://cran.r-project.org/)
+- RStudio: [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)
+
+Bei Installationsschwierigkeiten meldet euch möglichst bereits vor Kursbeginn.
+
+## Aufbau des Kurses
+
+- Vom 18. Oktober bis 29. November (6 Freitage)
+- Morgen-Session (mehr Theorie) 10 Uhr (ct) bis 12 Uhr
+- Nachmittags-Session (mehr Praxis) 13 Uhr bis ... (maximal 17 Uhr)
+
+## Inhalt des Kurses
+
+- Einleitung
+  - Was ist dieses R?
+  - R und RStudio
+  - R als Taschenrechner
+    - .R-Dateien (Skripte)
+    - Variablen und arithmetische Operationen
+  - Wir machen es uns gemütlich in RStudio
+    - Einstellungen, Themes, etc.
+    - Project-based Workflow
+    - R Markdown
+  - Das Tidyverse (und andere Packages)
+  - Hilfe finden
+    - Die Community
+    - StackOverflow, GitHub, R4DS, Slack, Advanced R
+- Arten von Daten
+  - Daten in der Wildniss
+  - Data in R
+    - Vector, matrix, array, list, data.frame (tibble)
+  - Data formats, Getting data into R
+- Mein erster Plot
+  - Das letzte Kuchendiagramm
+  - Barplots
+    - Base R vs ggplot2
+    - The grammar of graphics
+  - Scatterplots
+- Tidy data
+  - Prinzip
+  - Daten importieren
+  - Data-Wrangling mit dplyr and tidyr
+- Funktionale Programmierung (vs OOP)
+  - Funktionen schreiben
+  - FP vs. OOP
+  - Pure functions und Functional Programming
+- Beispieldatensätze
+  - UCBAdmissions: barplots
+  - Diamonds: distributions, scatterplots, covariance
+  - mpg: boxplot
+  - flights
+  - gapminder
+  - Large dataset: catalytic activity of proteins
+- Statistik
+  - Basics: sd, var, mean, median, correlation
+  - Histogramme, Verteilungen
+  - p-values
+    - t.test, Wilcoxon rank sum test, quisquared (ANOVA)
+- Modelling and data fitting
+  - linear regression
+    - Fitting
+    - MASS::rlm
+  - Analyse
+    - modelr, broom
+    - R^2, rmse, residuals, plots,
+  - non-linear regression
+- Many models
+  - nested datframes, list colums
+  - map
+
+Diese Inhaltsangabe ist thematisch, nicht chronologisch sortiert
+und erhebt keinen Anspruch auf Vollständigkeit. Alle Angaben ohne Gewähr.
+Bei Risiken und Nebenwirkungen fragen Sie Ihren Arzt oder Apotheker.
+
+## Resourcen
+
+### Tidyverse
+
+- [R for Data Science](https://r4ds.had.co.nz/) [@wickhamDataScienceImport2017]
+- [R4DS online Community](https://www.rfordatasci.com/)
+- [RStudio Cheat Sheets!](https://www.rstudio.com/resources/cheatsheets/)
+- [The Modern Dive](https://moderndive.com/) [@kim2019]
+
+### Allgemein R
+
+- [Advanced R](https://adv-r.hadley.nz/) [@wickham2019]
+- [Hands on Programming with R](https://rstudio-education.github.io/hopr/) [@grolemund2014]
+- [R Packages](http://r-pkgs.had.co.nz/) [@wickham2015]
+- [Data Visualization: A Practical Introduction](https://socviz.co/index.html) [@healy2018]
+
+### Statistic
+
+- [Intuitive Biostatistics](http://www.intuitivebiostatistics.com/) [@motulsky2017]
+- [Statistics Done Wrong](https://www.statisticsdonewrong.com/) [@reinhart2015]
+
+### Talks, Podcasts, Blogs
+
+- [David Robinson, YouTube](https://www.youtube.com/user/safe4democracy) []
+
+### Misc
+
+- [Unglaublich niedliche Illustrationen](https://github.com/allisonhorst/stats-illustrations) [@horst2019]
+- [Happy Git with R](https://happygitwithr.com/)
+
+## Sonstige Quellen
+
+- [Tips for Working with Images in Rmarkdown](http://zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/)
+
+Made with the help of these amazing packages (plus documentation):
+@R-base; @R-bookdown; @R-knitr; @R-rmarkdown; @xie2015
+

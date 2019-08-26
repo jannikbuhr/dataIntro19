@@ -1,0 +1,53 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Folgt {#day6}
+
+```{r}
+## Morning session: 
+# The jelly bean problem:
+# How do p-values behave if there is NO difference 
+# ("under the null hypothesis"):
+
+# How often do we commit a type I error 
+# (= claiming that there is a difference 
+# although there is none)?
+
+# What is the specificity
+# (= the probability to realize that there is 
+# no difference if there is none)?
+
+
+# How do p-values behave if there is
+# a real difference:
+
+
+# How often do we commit a type II error
+# (= claiming that there is NO difference 
+# although there is one)?
+
+
+# What is the sensitivity
+# (= the probability to detect the 
+# difference, also called "power")?
+
+
+# Power analysis: How likely is it to miss
+# a true effect?
+
+
+
+# With Power analysis, I can estimate a sample size
+# BEFORE performing the experiment:
+
+
+## Afternoon session: 
+# How to handle files
+# that are not correctly formated:
+
+# How to handle multiple files in a loop:
+
+```
+

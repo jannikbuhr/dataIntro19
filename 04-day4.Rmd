@@ -1,0 +1,83 @@
+# Folgt {#day4}
+
+```{r}
+## Wilcoxon rank sum test: 
+# The hat contains 11790 balls (genes in our analysis), each has a number 
+# (the rank that represents its affinity to the RBP). 
+# When 43 balls are drawn randomly (acquire our motif specifically in mouse genes), 
+# what is the probability to obtain a rank sum of at least 291610?
+# Let's simulate this situation:
+
+# how often did we obtain or even exceed a sum of 291610?
+
+# This is a normal distribution!
+
+
+# Instead of using the normal distribution as an approximation,
+# the Wilcoxon rank sum test will take all possible combinations of "balls" (= ranks)
+# into account, up to a sample size of 50 and if there are no ties ("balls" with the same rank)
+# Check:
+?wilcox.test()
+
+# Perform the test on the IP data:
+
+## The t-test:
+# For mRNA half-life measurement:
+
+# How would half-lives behave, if there were no difference between the two conditions?
+# They would have THE SAME mean and they would have THE SAME standard deviation.
+# And we HOPE, that they would follow a normal distribution... (hard to say from n = 3):
+
+
+# Now, we draw 3 observations and call them ctrl, and 3 observation that we call kd.
+# What happens to the effect sizes, if we repeat this 1000 times?
+
+# The result is not a normal distribution! It is broader. 
+
+# perform a t-test on our half-life measurements:
+
+
+## Exercises:
+# 1. Perform the wilcoxon rank-sum test and the t-test on the P-body counts in example3.csv.
+# Is there a significant difference between ko and wt cells?
+
+# 1. Use example3.csv. Imagine that the 300 cells on my microscope slide are perfectly representative for this cell type 
+# in general. Imagine that we count P-bodies in less cells than 300, 
+# and that the same cell could be selected more than once. 
+
+# 1. The impact of sample size on normality of means:
+# 1a. Check, whether the 300 wt values follow a normal distribution.
+
+# 1b. Now, randomly sample 3 wt values from the 300 values (with replacement) and calculate the mean.
+# Repeat this in a loop 1000 times. Are your 1000 means normal?
+
+# 1c. Vary the number of values that you select (sample size). 
+# What happens when you increase sample size? 
+
+# 2. The impact of sample size on the standard error of the mean
+# (= standard deviation of means):
+# Repeat what you did in 1c. This time, select 10, 40 or 160 values.
+# Calculate the standard deviation of the 1000 means that you obtain.
+# How does it change with sample size? What is the mathematical relationship to sample size?
+
+# 3. The impact of sample size on p-values: 
+# 3a. This time, randomly select 3 values from the wt vector 
+# and 3 values from the ko vector. Perform a t-test and get the p-value.
+# Repeat this 1000 times and look at the p-values as a histogram.
+
+# 3b. Vary the number of values that you select. What happens to the p-values?
+
+## Homework
+# You can easily create artificial data. For example:
+5:100 # gives you integer numbers from 5 to 100
+seq(5, 100, by = 5) # gives you the numbers from 5 to 100 in steps of 5
+c(1:100, 201:300) # concatenates the numbers from 1 to 100 and from 201 to 300
+# Can you create ...
+# ... two data sets with the same median, but a significant difference if you perform a
+# wilcoxon rank sum test?
+#  ... two data sets with the same mean, but a significant difference if you perform a
+# wilcoxon rank sum test?
+
+
+```
+

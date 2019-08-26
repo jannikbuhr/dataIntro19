@@ -1,0 +1,98 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# An die Daten! {#day2}
+
+## What is Probability?
+
+Resourcen:
+
+- [Seeing Theory](https://seeing-theory.brown.edu/)
+
+```{r}
+# What if the students of example1.csv choose their seats randomly?
+# Create a vector with 7 female and 6 male students
+
+# randomly select 7 students for the first row in the seminar room
+ 
+
+# What is the probability to observe at least 6 female students in the first row,
+# just by chance?
+# We need a loop! Example for a loop:
+
+
+# We want to repeat the random assignment of students to the first row
+# in a loop 1000 times.
+# We need a vector to store the results:
+
+
+# How often did we see at least 6 female students in the first row?
+
+
+# What is the exact p-value for 6 female students in the first row
+# from the hypergeometric distribution?
+
+
+
+# 3-dimensional arrays: UCBAdmissions as example
+
+```
+
+## Workflow einer Datenauswertung
+
+```{r, fig.cap="Quelle: @wickhamDataScienceImport2017", echo=FALSE}
+# download.file("https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png", "img//workflow.png", mode =  "wb")
+knitr::include_graphics("img/workflow.png")
+```
+
+
+
+## Übungen
+
+```{r}
+## Exercises:
+# 1a. Create a barplot showing the proportion (!) of genes involved in
+# development among genes with and without CDE (see the pie of Exercise 1a of day 1).
+
+
+# 1b. Imagine the genes as red (involved in development) and blue 
+# (not involved in development) balls in a hat. 
+# Simulate drawing 55 genes from the hat. Repeat this 1000 times. 
+# How often do you obtain 13 or more red balls 
+# (genes that are involved in development)?
+
+# 1c. Obtain the hypergeometric p-value for an enrichment of genes 
+# involved in development among genes with a CDE.
+
+
+# 2a. Show the proportion of male and female students among admitted
+# and rejected applicants at UC Berkeley in 1973 as stacked bar plot.
+
+
+# 2b. Calculate a p-value for an overrepresentation of male students
+# among the admitted students.
+
+
+# 2c. Calculate the admission rates for male and female applicants separately for each department. 
+# Try to use subsetting with [].
+# Can you identify a department with an obvious bias against women? 
+
+
+# 2d. Calculate the proportion of male and female applicants per department. 
+# Which departments were popular among female applicants?
+# Which departments were popular among male applicants?
+
+
+# 2e. Calculate the overall admission rate (independent of male/female) for each department.
+
+
+# 2f. Can you explain what happened?
+
+## Homework
+# Repeat what you did in Exercise 1a-c for genes in development among genes with and without CDE
+# for genes with an AREScore > 5 among cytokine and non-cytokine genes.
+```
+

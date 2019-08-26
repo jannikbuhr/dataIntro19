@@ -1,0 +1,103 @@
+# Folgt {#day3}
+
+```{r}
+# Setting a cut-off for AREScores (e.g. > 5) reduces ordinal data 
+# to categorical data! We lose information!
+# Instead, we can show distributions as boxplots:
+
+# The vector cytokines can be used as factor to group data:
+
+
+# factors can be created with factor().
+# The order of the levels can be defined:
+
+
+# Histograms are even more informative:
+
+
+# To make two histograms comparable, the breaks need to be identical!
+
+
+# Instead of absolute counts (frequencies), proportions can be shown:
+
+
+# Two histograms can be combined if we use the barplot function instead.
+# We need the heights of the bars. 
+# They can be taken from the histograms:
+
+
+# The heights of the bars need to be combined in a matrix.
+
+# To show the bars next to each other instead of stacked, 
+# we need beside = T.
+
+
+# A legend needs to be added to distinguish the groups:
+
+
+# The bars need labels on the x-axis.
+# To create intervals as labels:
+
+# To show only the first five groups of bars:
+
+
+# Why not showing the mean AREScore of cytokines and non-cytokines 
+
+
+# ..and add standard deviations? 
+
+
+# Barplot with standard deviations for half-life measurements
+# with 3 biological replicates:
+
+# get the position of the bars to add error bars
+
+# ylim(): set limits of the y-axis to create space for error bars:
+ 
+# add SD as error bars
+
+
+## clear environment:
+
+
+## Exercises:
+# 1. I counted the number of P bodies in 300 wt and 300 ko cells 
+# (example3.csv).
+
+# 1a. Display the data as boxplot. 
+
+# 1b. Display the same data as two histograms 
+# (one for wt cells, one for ko cells).  
+
+# 1c. Display the data in one "histogram" by using the barplot 
+# function. Make it pretty, include axis labels, a legend etc.
+
+# 1d. Display the data as barplot with the standard deviation 
+# as error bars. Why is this a bad way of showing the data? 
+
+# add SD as error bars
+
+
+# 2. We want to combine our bioinfomatic prediction of CDE-containing
+# genes with experimental data. The file example4.csv contains
+# immunoprecipitation data of the protein that binds the CDE. 
+# What is the affinity of the different groups
+# of mRNAs ("no CDE", "ORF", "not conserved", "conserved CDE") to
+# the CDE-binding protein? We are looking for a good way to show the data.
+
+
+# 2a. Display the data as boxplot. 
+
+# 2b. Display the same data as histograms 
+# (one for each group of genes). 
+
+# 2c. Display the data in one "histogram" by using the barplot 
+# function. Make it pretty, include axis labels, a legend etc.
+
+
+## Homework: 
+# Go back to example2.csv. Show the AREScore of the different CDE 
+# groups as boxplot, histograms or one combined histogram, 
+# as you did it with the data in Exercise 2.
+```
+
