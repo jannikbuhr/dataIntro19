@@ -1,1 +1,1 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.
+Material zum Kurs "Einführung in die Datenauswertung mit R" zum WS19/20 an der Universität Heidelberg (Biochemie Bachelor).
