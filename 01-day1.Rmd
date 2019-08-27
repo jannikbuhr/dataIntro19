@@ -1,3 +1,4 @@
+
 # Los Geht's! {#day1}
 
 ## Slides
@@ -15,9 +16,8 @@
 
 Wichtige RStudio-Einstellungen:
 
-```{r echo=FALSE, out.width='40%'}
-knitr::include_graphics("img/RS_settings.png")
-knitr::include_graphics("img/RS_settings2.png")
+```{r, echo=FALSE, fig.show='hold', out.width='50%', fig.cap="RStudio Einstellungen"}
+knitr::include_graphics(c("img/RS_settings.png", "img/RS_settings2.png"))
 ```
 
 ## Packages
@@ -26,6 +26,6 @@ knitr::include_graphics("img/RS_settings2.png")
 
 ```{r}
 # install.packages("tidyverse")
-library(tidyverse)
+# library(tidyverse)
 ```
 

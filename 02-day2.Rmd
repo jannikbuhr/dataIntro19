@@ -1,12 +1,8 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-
 # An die Daten! {#day2}
 
-## What is Probability?
+## What is Probability
+
+
 
 Resourcen:
 
@@ -36,21 +32,189 @@ Resourcen:
 # from the hypergeometric distribution?
 
 
-
 # 3-dimensional arrays: UCBAdmissions as example
 
 ```
 
 ## Workflow einer Datenauswertung
 
-```{r, fig.cap="Quelle: @wickhamDataScienceImport2017", echo=FALSE}
-# download.file("https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png", "img//workflow.png", mode =  "wb")
+```{r,fig.align='center', fig.cap="Quelle: @wickhamDataScienceImport2017", echo=FALSE}
 knitr::include_graphics("img/workflow.png")
 ```
 
+## Import
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+# base-r would be:
+# read.csv("data/01_starwars_example.csv")
+
+# starwars <- read_csv("data/01_starwars_example.csv")
+# head(starwars)
+```
+
+<!-- Das war einfach, wird aber nicht immer so sein. -->
+<!-- Messy Data Example -->
+
+## Visualize
+
+```{r}
+# starwars %>%
+#   select(height, mass) %>%
+#   ggplot(aes(x = mass, y = height)) +
+#   geom_point()
+```
+
+```{r}
+# starwars %>%
+#   filter(mass > 1000) %>%
+#   select(name)
+```
+
+```{r, fig.cap="Jabba the Hut, Quelle: Wikipedia", echo=FALSE}
+knitr::include_graphics("img/jabba.png")
+```
+
+
+## Transform 
+
+<!-- Jabba ist an dieser Stelle ganz klar ein Outlier. Und obwohl wir nicht einfach so Datenpunkte aus unserer Analyse entfernen können, ohne einen triftige Grund zu haben, wollen wir an dieser Stelle mal ein Auge zudrücken, um die anderen Charakter -->
+<!-- vernünftig auf einen Graph packen zu können. -->
+
+<!-- Außerdem sind die Massen in $kg$ angegeben, die Größen jedoch in $cm$ und -->
+<!-- wir hätten gerne überall SI-Einheiten: -->
+
+```{r}
+# starwars <-
+# starwars %>%
+#   filter(mass < 1000) %>%
+#   mutate(height = height / 100) %>% 
+#   arrange(height)
+```
+
+```{r}
+# p <- 
+# starwars %>%
+#   ggplot(aes(x = mass, y = height, color = species, label = name)) +
+#   geom_point()
+# 
+# plotly::ggplotly(p)
+```
+
+```{r}
+# hist(starwars$height)
+```
+
+```{r}
+# starwars %>% 
+#   filter(!is.na(height), !is.na(gender)) %>%
+#   ggplot(aes(height, fill = gender)) +
+#   geom_histogram(alpha = 0.8, position = "identity") +
+#   theme_bw() +
+#   scale_fill_brewer(type = "qual")
+```
+
+```{r}
+# starwars %>% 
+#   filter(!is.na(height), !is.na(gender)) %>%
+#   ggplot(aes(height, fill = gender)) +
+#   geom_histogram(alpha = 1, position = "identity") +
+#   theme_bw() +
+#   scale_fill_brewer(type = "qual") +
+#   facet_wrap(~gender)
+```
+
+
+```{r}
+# starwars %>% 
+#   filter(!is.na(height), !is.na(gender)) %>%
+#   ggplot(aes(height, fill = gender, color = gender)) +
+#   geom_density(alpha = 0.8) +
+#   theme_bw() +
+#   scale_fill_brewer(type = "qual")
+```
+
+```{r}
+# starwars %>% 
+#   group_by(species) %>% 
+#   summarise(
+#     sd = sd(mass, na.rm = TRUE),
+#     mass = mean(mass, na.rm = TRUE)
+#     ) %>% 
+#   arrange(-mass)
+```
+
+```{r}
+# starwars %>% 
+#   group_by(species) %>% 
+#   summarise(
+#     SD = sd(mass, na.rm = TRUE),
+#     mass = mean(mass, na.rm = TRUE)
+#     ) %>% 
+#   arrange(-mass) %>%
+#   filter(!is.nan(SD)) %>% 
+#   ggplot(aes(x = species, y = mass)) +
+#   geom_col(fill = "#0038D1", width = 0.8) +
+#   geom_errorbar(aes(ymin = mass - SD, ymax = mass + SD), width = 0.3, size = 1.2) +
+#   theme_classic()
+```
 
 
 ## Übungen
+
+### Histogramm
+
+Erstelle ein Histogramm für die Gewichtsverteilung aller Charaktere aus
+dem StarWars-Datenset.
+
+### Barchart
+
+Welche Species hat die schwersten Vertreter?
+
+### Wahrscheinlichkeit
+
+Wie Wahrscheinlich ist es, bei gleicher Verteilung von Geschlechtern im Universum,
+allein durch Zufall diesen oder einen höheren Männerüberschuss in StarWars zu erhalten?
+
+```{r}
+# Note: This variable was called gender by the authors of the dataset,
+# but I assume they meant sex.
+starwars %>% count(gender)
+male   <- 62
+female <- 19
+sum(male, female)
+```
+
+1b. Imagine the genes as red (involved in development) and blue 
+(not involved in development) balls in a hat.
+Simulate drawing 55 genes from the hat. Repeat this 1000 times. 
+How often do you obtain 13 or more red balls 
+(genes that are involved in development)?
+
+```{r}
+hat <- c("male", "female")
+draw <- sample(hat, size =  81, replace = TRUE)
+
+draw_from_hat <- function() {
+  hat <- c("male", "female")
+  draw <- sample(hat, size =  81, replace = TRUE)
+  sum(draw == "male")
+}
+
+N <- 100000
+draws <- map_int(1:N, ~draw_from_hat())
+hist(draws)
+
+sum(draws >= 62)
+
+# phyper(62)
+```
+
+
 
 ```{r}
 ## Exercises:

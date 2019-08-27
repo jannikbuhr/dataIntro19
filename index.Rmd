@@ -4,11 +4,25 @@ author: "Jannik Buhr"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
+colorlinks: yes
+github-repo: jannikbuhr/dataIntro19
 bibliography: ["references.bib", "book.bib", "packages.bib"]
 csl: chicago-author-date-de.csl
 link-citations: true
 description: "Datenauswertung für Biochemiker, eine Einführung mit R"
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{r setup, include=FALSE}
+options(
+  tidyverse.quiet = TRUE,
+  htmltools.dir.version = FALSE, formatR.indent = 2,
+  width = 55, warnPartialMatchAttr = FALSE,
+  warnPartialMatchDollar = FALSE
+)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
 
 # Prolog {-}
 
@@ -26,8 +40,8 @@ Persönlich empfehle ich das Arbeiten am eigenen Gerät, aber
 für alle, die keine Laptops besitzen oder mitbringen
 möchten, werden Computer (Mac) zur Verfügung stehen.
 
-- R: [https://cran.r-project.org/](https://cran.r-project.org/)
-- RStudio: [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)
+- [R: https://cran.r-project.org/](https://cran.r-project.org/)
+- [RStudio: https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)
 
 Bei Installationsschwierigkeiten meldet euch möglichst bereits vor Kursbeginn.
 
@@ -73,6 +87,7 @@ Bei Installationsschwierigkeiten meldet euch möglichst bereits vor Kursbeginn.
   - FP vs. OOP
   - Pure functions und Functional Programming
 - Beispieldatensätze
+  - starwars: import, mutate, plot
   - UCBAdmissions: barplots
   - Diamonds: distributions, scatterplots, covariance
   - mpg: boxplot

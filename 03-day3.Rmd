@@ -1,5 +1,72 @@
 # Folgt {#day3}
 
+## The Importance of Visualization
+
+### Anscombes Quartet
+
+```{r}
+anscombe <- read_csv("./data/02_anscombe_cleaned.csv")
+```
+
+Summarise
+
+```{r}
+anscombe %>% 
+  group_by(group) %>% 
+  summarise(
+    x_mean = mean(x),
+    y_mean = mean(y),
+    x_sd = sd(x),
+    y_sd = sd(x),
+    corr = cor(x,y)
+  )
+```
+
+Plot
+
+```{r}
+# anscombe %>% 
+#   ggplot(aes(x, y)) +
+#   geom_point() +
+#   coord_equal() +
+#   facet_wrap(~group, nrow = 2)
+```
+
+### Excercise: The Datasaurus Dozen
+
+Das Forschungspaper findet ihr [hier](https://www.autodeskresearch.com/publications/samestats)
+[@matejka2017a].
+
+```{r}
+# install.packages("datasauRus")
+# dinos <- datasauRus::datasaurus_dozen
+```
+
+```{r}
+# dinos %>%
+#   group_by(dataset) %>% 
+#   summarize(
+#     x_mean = mean(x),
+#     y_mean = mean(y),
+#     x_sd = sd(x),
+#     y_sd = sd(x),
+#     corr = cor(x,y)
+#   )
+```
+
+
+
+```{r}
+# dinos %>% 
+#   ggplot(aes(x, y)) +
+#   geom_point() +
+#   facet_wrap(~dataset) +
+#   coord_equal() +
+#   theme_bw()
+```
+
+
+
 ```{r}
 # Setting a cut-off for AREScores (e.g. > 5) reduces ordinal data 
 # to categorical data! We lose information!
@@ -53,7 +120,7 @@
 # get the position of the bars to add error bars
 
 # ylim(): set limits of the y-axis to create space for error bars:
- 
+
 # add SD as error bars
 
 

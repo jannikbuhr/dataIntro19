@@ -35,12 +35,14 @@ TRUE -> z
 10L + 66L
 53.2 - 4
 2.0 * 2L
-3L / 4
+3L / 4L
 5 %/% 2
 5 %% 2
 0 / 0
+sin(pi / 2)
+sin(pi)
 
-sin(2)
+
 ?sin
 
 # batman <- function() c(rep(0/0, 10), "Batman!")
