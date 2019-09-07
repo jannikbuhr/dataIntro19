@@ -1,7 +1,11 @@
 
 # Folgt {#day4}
 
-```{r}
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r, echo = FALSE}
 ## Wilcoxon rank sum test: 
 # The hat contains 11790 balls (genes in our analysis), each has a number 
 # (the rank that represents its affinity to the RBP). 

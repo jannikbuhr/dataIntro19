@@ -1,7 +1,11 @@
 
 # Folgt {#day5}
 
-```{r}
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r,echo=FALSE}
 ## linear regression on RNA decay data:
 # RNA levels decrease after transcription was shut down with Actinomycin D:
 

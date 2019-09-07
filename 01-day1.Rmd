@@ -1,5 +1,8 @@
-
 # Los Geht's! {#day1}
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
 
 ## Slides
 
@@ -9,6 +12,7 @@
 
 ```{r, eval=FALSE}
 # Code coming
+# Currently in math.R
 
 ```
 

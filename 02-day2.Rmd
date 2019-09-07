@@ -1,40 +1,87 @@
 # An die Daten! {#day2}
 
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
 ## What is Probability
 
+Es gibt zwei Konzepte von Wahrscheinlichkeit (Probability, $P$ ):
+
+- Probability inside your head: strength of belief; may vary among people
+- Probability „out there“: long-term frequency of an event;
+  can be empirically measured or predicted from a model [@motulsky2017].
+  
+### Beispiel:
+
+Drawing from a hat (categorical / discrete data)
+
+```{r, eval = FALSE}
+library(tidyverse)
+# Code
+# create hat of hairlengths
+hat <- c(rep("l", 4), rep("s", 6))
+# sample / draw from hat
+# for the firs row
+sample(hat, size = 5)
+# How many have long hair?
+res <- sample(hat, size = 5)
+res == "l"
+sum(res == "l")
+# Simulate
+## For loop vs functional style
+for (i in 1:10) {
+  print(i)
+}
+
+walk(1:10, print)
+## Simulation
+draw <- function(hat, size) {
+  res <- sample(hat, size)
+  sum(res == "l")
+}
+
+N <- 1000
+long_hair_numbers <- map_int(1:N, ~draw(hat, 5))
+# Histogram, Mean, Median
+hist(long_hair_numbers, breaks = 0:5)
+mean(long_hair_numbers)
+median(long_hair_numbers)
+
+# How surprised should we be? -> Calculate probabilty for random event
+sum(long_hair_numbers >= 4) / N
+```
+
+### P-Values
+
+Introduced in the 1920s by Ronald Fisher:
+
+> _"The P value is defined as the probability, under the assumption of no effect or no difference (the null hypothesis), of obtaining a result equal to or more extreme than what was actually observed."_
+> $-$ (Original: [tatistical_Methods_for_Research_Workers](https://en.wikipedia.org/wiki/Statistical_Methods_for_Research_Workers)) [@fisher1990]
 
 
-Resourcen:
+By convention: p ≤ 0.05 is “significant” p ≤ 0.01 is “highly significant”
+
+In other words, a p-Value is...
+
+> _"... a measure of how surprised you should be if there is no actual difference […], but you got data suggesting there is"_
+>  $-$ Alex Reinhart [@reinhart2015]
+
+```{r, eval = FALSE}
+# Calculate the exact p-value:
+# hypergeometric distribution
+# Cummulative probabilities!
+# default: P(X <= x)
+
+1 - phyper(3, 4, 6, 4)
+barplot(dhyper(0:5, 4, 6, 4), names.arg = 0:5)
+# P(X ≥ 6) = 1 - P(X ≤ 5)
+```
+
+
+### Resourcen
 
 - [Seeing Theory](https://seeing-theory.brown.edu/)
-
-```{r}
-# What if the students of example1.csv choose their seats randomly?
-# Create a vector with 7 female and 6 male students
-
-# randomly select 7 students for the first row in the seminar room
- 
-
-# What is the probability to observe at least 6 female students in the first row,
-# just by chance?
-# We need a loop! Example for a loop:
-
-
-# We want to repeat the random assignment of students to the first row
-# in a loop 1000 times.
-# We need a vector to store the results:
-
-
-# How often did we see at least 6 female students in the first row?
-
-
-# What is the exact p-value for 6 female students in the first row
-# from the hypergeometric distribution?
-
-
-# 3-dimensional arrays: UCBAdmissions as example
-
-```
 
 ## Workflow einer Datenauswertung
 
@@ -44,21 +91,56 @@ knitr::include_graphics("img/workflow.png")
 
 ## Import
 
-```{r}
-library(tidyverse)
-```
+Link to the data:
+
+[https://github.com/jannikbuhr/dataIntro19/tree/master/data](https://github.com/jannikbuhr/dataIntro19/tree/master/data)
 
 
-```{r}
+
+```{r, eval = FALSE}
 # base-r would be:
 # read.csv("data/01_starwars_example.csv")
 
-# starwars <- read_csv("data/01_starwars_example.csv")
-# head(starwars)
+starwars <- read_csv("data/01_starwars_example.csv")
+# Or:
+# starwars <- read_csv("https://raw.githubusercontent.com/jannikbuhr/dataIntro19/master/data/01_starwars_example.csv")
+head(starwars)
 ```
 
 <!-- Das war einfach, wird aber nicht immer so sein. -->
 <!-- Messy Data Example -->
+
+### Tidyverse: The pipe and dplyr verbs
+
+The pipe
+
+```{r, eval = FALSE}
+# f(g(x)) = x %>% g %>% f
+sum(1:10)
+1:10 %>% sum()
+```
+
+Dplyr verbs:
+
+- select
+- filter
+- arrange
+- mutate
+- summarise
+
+Dpylr adverbs
+
+- group_by
+
+```{r, eval = FALSE}
+starwars %>%
+  select(name, height, mass, gender) %>% 
+  filter(height > 100) %>% 
+  arrange(desc(mass)) %>% 
+  mutate(height = height / 100) %>%
+  group_by(gender) %>%
+  summarise(mean_mass = mean(mass, na.rm = TRUE))
+```
 
 ## Visualize
 
@@ -163,7 +245,6 @@ knitr::include_graphics("img/jabba.png")
 #   theme_classic()
 ```
 
-
 ## Übungen
 
 ### Histogramm
@@ -189,74 +270,43 @@ female <- 19
 sum(male, female)
 ```
 
-1b. Imagine the genes as red (involved in development) and blue 
-(not involved in development) balls in a hat.
-Simulate drawing 55 genes from the hat. Repeat this 1000 times. 
-How often do you obtain 13 or more red balls 
-(genes that are involved in development)?
+Simulate drawing 81 characters from the hat. Repeat this 1000 times. 
+How often do you obtain 62 or more male characters?
 
 ```{r}
+# create hat with male and female
 hat <- c("male", "female")
+# draw 81 with replacement
 draw <- sample(hat, size =  81, replace = TRUE)
-
-draw_from_hat <- function() {
-  hat <- c("male", "female")
-  draw <- sample(hat, size =  81, replace = TRUE)
+# table
+table(draw)
+# Create a function that does that and counts males
+draw_from_hat <- function(hat, n) {
+  draw <- sample(hat, size = n, replace = TRUE)
   sum(draw == "male")
 }
 
+# To it 100'000 times
 N <- 100000
-draws <- map_int(1:N, ~draw_from_hat())
+draws <- map_int(1:N, ~draw_from_hat(hat, n = 81))
+# Draw a histogram
 hist(draws)
 
+# How often did we get 62 or more?
 sum(draws >= 62)
 
-# phyper(62)
+# Use pbinom to find the exact p-value
+1 - pbinom(62, 81, 0.5)
 ```
 
-
+### UCBAdmissions (maybe)
 
 ```{r}
-## Exercises:
-# 1a. Create a barplot showing the proportion (!) of genes involved in
-# development among genes with and without CDE (see the pie of Exercise 1a of day 1).
-
-
-# 1b. Imagine the genes as red (involved in development) and blue 
-# (not involved in development) balls in a hat. 
-# Simulate drawing 55 genes from the hat. Repeat this 1000 times. 
-# How often do you obtain 13 or more red balls 
-# (genes that are involved in development)?
-
-# 1c. Obtain the hypergeometric p-value for an enrichment of genes 
-# involved in development among genes with a CDE.
-
-
-# 2a. Show the proportion of male and female students among admitted
-# and rejected applicants at UC Berkeley in 1973 as stacked bar plot.
-
-
-# 2b. Calculate a p-value for an overrepresentation of male students
-# among the admitted students.
-
-
-# 2c. Calculate the admission rates for male and female applicants separately for each department. 
-# Try to use subsetting with [].
-# Can you identify a department with an obvious bias against women? 
-
-
-# 2d. Calculate the proportion of male and female applicants per department. 
-# Which departments were popular among female applicants?
-# Which departments were popular among male applicants?
-
-
-# 2e. Calculate the overall admission rate (independent of male/female) for each department.
-
-
-# 2f. Can you explain what happened?
-
-## Homework
-# Repeat what you did in Exercise 1a-c for genes in development among genes with and without CDE
-# for genes with an AREScore > 5 among cytokine and non-cytokine genes.
+# UCBAdmissions
+# a 3 dimensional array, not so much fun to work with
+# we can turn it into rectangular data
+df <- as_tibble(UCBAdmissions)
 ```
+
+
 

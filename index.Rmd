@@ -2,6 +2,7 @@
 title: "Einführung in die Datenauswertung mit R"
 author: "Jannik Buhr"
 date: "`r Sys.Date()`"
+# mathjax: "local"
 site: bookdown::bookdown_site
 documentclass: book
 colorlinks: yes
@@ -42,6 +43,20 @@ möchten, werden Computer (Mac) zur Verfügung stehen.
 
 - [R: https://cran.r-project.org/](https://cran.r-project.org/)
 - [RStudio: https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)
+
+Für die Verwendung der vorhandenen statt eigener Computer würde ich
+euch bitten, euch unter folgendem Link bei _RStudio Cloud_ anzumelden.
+Dabei handelt es sich um eine Version von RStudio, die auf einem Server läuft
+und von euch über jeden beliebigen Browser aufgerufen werden kann. Auf diese
+Weise sind wir nicht von der IT-Abteilung des ZMBHs abhängig, die neuste Version
+von R und RSTudio zu installieren. Zusätzlich könnt ihr auch von zu Hause auf
+eure Dateien zugreifen.
+
+- [RStudio Cloud](https://rstudio.cloud/)
+
+Dort müsst ihr euch dann nur anmelden und weiter nichts tun,
+die neusten Versionen von R und RStudio
+sind dort bereits installiert.
 
 Bei Installationsschwierigkeiten meldet euch möglichst bereits vor Kursbeginn.
 
@@ -130,6 +145,7 @@ Bei Risiken und Nebenwirkungen fragen Sie Ihren Arzt oder Apotheker.
 - [Hands on Programming with R](https://rstudio-education.github.io/hopr/) [@grolemund2014]
 - [R Packages](http://r-pkgs.had.co.nz/) [@wickham2015]
 - [Data Visualization: A Practical Introduction](https://socviz.co/index.html) [@healy2018]
+- [Graph Cookbook](http://www.cookbook-r.com/Graphs/) [@chang2013]
 
 ### Statistic
 
@@ -147,6 +163,7 @@ Bei Risiken und Nebenwirkungen fragen Sie Ihren Arzt oder Apotheker.
 
 ## Sonstige Quellen
 
+- [Tidytuesday](https://github.com/rfordatascience/tidytuesday)
 - [Tips for Working with Images in Rmarkdown](http://zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/)
 
 Made with the help of these amazing packages (plus documentation):

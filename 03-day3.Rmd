@@ -1,25 +1,33 @@
 # Folgt {#day3}
 
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
 ## The Importance of Visualization
 
 ### Anscombes Quartet
 
-```{r}
+Link to Data
+
+[https://github.com/jannikbuhr/dataIntro19/tree/master/data](https://github.com/jannikbuhr/dataIntro19/tree/master/data)
+
+```{r, eval = FALSE}
 anscombe <- read_csv("./data/02_anscombe_cleaned.csv")
 ```
 
 Summarise
 
 ```{r}
-anscombe %>% 
-  group_by(group) %>% 
-  summarise(
-    x_mean = mean(x),
-    y_mean = mean(y),
-    x_sd = sd(x),
-    y_sd = sd(x),
-    corr = cor(x,y)
-  )
+# anscombe %>% 
+#   group_by(group) %>% 
+#   summarise(
+#     x_mean = mean(x),
+#     y_mean = mean(y),
+#     x_sd = sd(x),
+#     y_sd = sd(x),
+#     corr = cor(x,y)
+#   )
 ```
 
 Plot
@@ -67,7 +75,7 @@ Das Forschungspaper findet ihr [hier](https://www.autodeskresearch.com/publicati
 
 
 
-```{r}
+```{r, echo=FALSE}
 # Setting a cut-off for AREScores (e.g. > 5) reduces ordinal data 
 # to categorical data! We lose information!
 # Instead, we can show distributions as boxplots:

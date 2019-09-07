@@ -1,7 +1,11 @@
 
 # Folgt {#day6}
 
-```{r}
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r,echo=FALSE}
 ## Morning session: 
 # The jelly bean problem:
 # How do p-values behave if there is NO difference 
