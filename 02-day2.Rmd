@@ -10,39 +10,38 @@ Es gibt zwei Konzepte von Wahrscheinlichkeit (Probability, $P$ ):
 
 - Probability inside your head: strength of belief; may vary among people
 - Probability „out there“: long-term frequency of an event;
-  can be empirically measured or predicted from a model [@motulsky2017].
-  
+can be empirically measured or predicted from a model [@motulsky2017].
+
 ### Beispiel:
 
 Drawing from a hat (categorical / discrete data)
 
 ```{r, eval = FALSE}
-library(tidyverse)
 # Code
 # create hat of hairlengths
 hat <- c(rep("l", 4), rep("s", 6))
 # sample / draw from hat
-# for the firs row
+# for the first row
 sample(hat, size = 5)
+
 # How many have long hair?
 res <- sample(hat, size = 5)
 res == "l"
 sum(res == "l")
+
 # Simulate
-## For loop vs functional style
 for (i in 1:10) {
   print(i)
 }
 
-walk(1:10, print)
-## Simulation
-draw <- function(hat, size) {
-  res <- sample(hat, size)
-  sum(res == "l")
-}
 
+## Simulation
 N <- 1000
-long_hair_numbers <- map_int(1:N, ~draw(hat, 5))
+long_hair_numbers <- 1:N
+for (i in 1:N) {
+  res <- sample(hat, 5)
+  long_hair_numbers[i] <- sum(res == "l")
+}
 # Histogram, Mean, Median
 hist(long_hair_numbers, breaks = 0:5)
 mean(long_hair_numbers)
@@ -54,13 +53,13 @@ sum(long_hair_numbers >= 4) / N
 
 ### P-Values
 
-Introduced in the 1920s by Ronald Fisher:
+Eingeführt in den 1920-ern von Ronald Fisher:
 
 > _"The P value is defined as the probability, under the assumption of no effect or no difference (the null hypothesis), of obtaining a result equal to or more extreme than what was actually observed."_
 > $-$ (Original: [tatistical_Methods_for_Research_Workers](https://en.wikipedia.org/wiki/Statistical_Methods_for_Research_Workers)) [@fisher1990]
 
 
-By convention: p ≤ 0.05 is “significant” p ≤ 0.01 is “highly significant”
+Nach Konvention: p ≤ 0.05 ist “significant” p ≤ 0.01 ist “highly significant”
 
 In other words, a p-Value is...
 
@@ -73,11 +72,11 @@ In other words, a p-Value is...
 # Cummulative probabilities!
 # default: P(X <= x)
 
-1 - phyper(3, 4, 6, 4)
-barplot(dhyper(0:5, 4, 6, 4), names.arg = 0:5)
+# long_hair_numbers >= 4
+1 - phyper(q = 3, m =  4, n =  6, k =  5)
+barplot(dhyper(x = 0:5, m = 4, n =  6, k =  5), names.arg = 0:5)
 # P(X ≥ 6) = 1 - P(X ≤ 5)
 ```
-
 
 ### Resourcen
 
@@ -96,15 +95,9 @@ Link to the data:
 [https://github.com/jannikbuhr/dataIntro19/tree/master/data](https://github.com/jannikbuhr/dataIntro19/tree/master/data)
 
 
-
 ```{r, eval = FALSE}
-# base-r would be:
-# read.csv("data/01_starwars_example.csv")
-
+library(tidyverse)
 starwars <- read_csv("data/01_starwars_example.csv")
-# Or:
-# starwars <- read_csv("https://raw.githubusercontent.com/jannikbuhr/dataIntro19/master/data/01_starwars_example.csv")
-head(starwars)
 ```
 
 <!-- Das war einfach, wird aber nicht immer so sein. -->
@@ -262,8 +255,6 @@ Wie Wahrscheinlich ist es, bei gleicher Verteilung von Geschlechtern im Universu
 allein durch Zufall diesen oder einen höheren Männerüberschuss in StarWars zu erhalten?
 
 ```{r}
-# Note: This variable was called gender by the authors of the dataset,
-# but I assume they meant sex.
 starwars %>% count(gender)
 male   <- 62
 female <- 19

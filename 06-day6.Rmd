@@ -51,3 +51,33 @@ knitr::opts_chunk$set(eval = FALSE)
 
 ```
 
+
+## Non Linear Least Squares Fitting
+
+```{r, eval = FALSE, echo = FALSE}
+PurTrt <- Puromycin[ Puromycin$state == "treated", ]
+
+michaelis_menten_fun <- function(conc, Vm, K) {
+  (Vm * conc) / (K + conc)
+}
+
+plot(PurTrt$conc, PurTrt$rate)
+curve(michaelis_menten_fun(conc = x, Vm = 200, K = 0.06),
+      add = TRUE,
+      col = 'red',
+      from = 0, to = 1,
+      n = 100)
+
+model <- nls(rate ~ michaelis_menten_fun(conc, Vm, K),
+          start = list(Vm = 200, K = 0.1), data = PurTrt)
+
+
+x0 <- seq(min(PurTrt$conc), max(PurTrt$conc), length = 50)
+y0 <- predict(model, newdata = list(conc = x0))
+plot(PurTrt$conc, PurTrt$rate)
+lines(x0, y0, col = 'red')
+
+
+```
+
+

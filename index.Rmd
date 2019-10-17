@@ -138,6 +138,7 @@ Bei Risiken und Nebenwirkungen fragen Sie Ihren Arzt oder Apotheker.
 - [R4DS online Community](https://www.rfordatasci.com/)
 - [RStudio Cheat Sheets!](https://www.rstudio.com/resources/cheatsheets/)
 - [The Modern Dive](https://moderndive.com/) [@kim2019]
+- [RStudio Education](https://education.rstudio.com/)
 
 ### Allgemein R
 
