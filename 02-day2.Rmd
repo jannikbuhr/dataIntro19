@@ -1,8 +1,47 @@
-# An die Daten! {#day2}
+# An die Daten {#day2}
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)
 ```
+
+## Workflow einer Datenauswertung
+
+```{r,fig.align='center', fig.cap="Quelle: @wickhamDataScienceImport2017", echo=FALSE}
+knitr::include_graphics("img/workflow.png")
+```
+
+### Tidyverse: The pipe and dplyr verbs
+
+The pipe
+
+```{r, eval = FALSE}
+# f(g(x)) = x %>% g %>% f
+sum(1:10)
+1:10 %>% sum()
+```
+
+Dplyr verbs:
+
+- select
+- filter
+- arrange
+- mutate
+- summarise
+
+Dpylr adverbs
+
+- group_by
+
+```{r, eval = FALSE}
+starwars %>%
+  select(name, height, mass, gender) %>% 
+  filter(height > 100) %>% 
+  arrange(desc(mass)) %>% 
+  mutate(height = height / 100) %>%
+  group_by(gender) %>%
+  summarise(mean_mass = mean(mass, na.rm = TRUE))
+```
+
 
 ## What is Probability
 
@@ -82,11 +121,7 @@ barplot(dhyper(x = 0:5, m = 4, n =  6, k =  5), names.arg = 0:5)
 
 - [Seeing Theory](https://seeing-theory.brown.edu/)
 
-## Workflow einer Datenauswertung
 
-```{r,fig.align='center', fig.cap="Quelle: @wickhamDataScienceImport2017", echo=FALSE}
-knitr::include_graphics("img/workflow.png")
-```
 
 ## Import
 
@@ -103,37 +138,6 @@ starwars <- read_csv("data/01_starwars_example.csv")
 <!-- Das war einfach, wird aber nicht immer so sein. -->
 <!-- Messy Data Example -->
 
-### Tidyverse: The pipe and dplyr verbs
-
-The pipe
-
-```{r, eval = FALSE}
-# f(g(x)) = x %>% g %>% f
-sum(1:10)
-1:10 %>% sum()
-```
-
-Dplyr verbs:
-
-- select
-- filter
-- arrange
-- mutate
-- summarise
-
-Dpylr adverbs
-
-- group_by
-
-```{r, eval = FALSE}
-starwars %>%
-  select(name, height, mass, gender) %>% 
-  filter(height > 100) %>% 
-  arrange(desc(mass)) %>% 
-  mutate(height = height / 100) %>%
-  group_by(gender) %>%
-  summarise(mean_mass = mean(mass, na.rm = TRUE))
-```
 
 ## Visualize
 

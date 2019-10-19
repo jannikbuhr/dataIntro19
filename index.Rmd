@@ -2,7 +2,6 @@
 title: "Einführung in die Datenauswertung mit R"
 author: "Jannik Buhr"
 date: "`r Sys.Date()`"
-# mathjax: "local"
 site: bookdown::bookdown_site
 documentclass: book
 colorlinks: yes
