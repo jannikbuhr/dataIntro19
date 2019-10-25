@@ -39,7 +39,7 @@ knitr::include_graphics("img/workflow.png")
 
 ### Communication!
 
-Rmarkdown ermöglicht es uns, den Code zur Datenausewertung
+Rmarkdown ermöglicht es uns, den Code zur Datenauswertung
 mitsamt den Ergebnissen, Plots und Gedanken dazu an einem Ort zu sammeln
 und zu dokumentieren. Im Kurs arbeiten wir ebenfalls mit Rmarkdown,
 da wir so wunderbar die zeigen können, was jede Zeile des Codes tut,
@@ -71,7 +71,7 @@ library(tidyverse)
 ```
 
 Ich habe diesem Codeblock noch die Option "```{r, message=FALSE} ..."
-gegeben, damit die Begrüßungsnachricht des Tidyverses nicht in unserem Bericht landet.
+gegeben, damit die Begrüßungsnachricht des tidyverse nicht in unserem Bericht landet.
 
 In einem beliebigen Tabellen-Programm (Excel in unserem Fall)
 erstellen wir eine Liste mit den Kursteilnehmerinnen und Teilnehmern und halten
@@ -84,9 +84,9 @@ _data_ Ordner unseres RStudio-Projekt-Ordners als ".csv"-Datei.
 students <- read_csv("data/students.csv")
 ```
 
-Deutsche Excel Versionen nehmen statt Kommata (wie in comma-separated values)
+Deutsche Excel Versionen nehmen statt Kommata (wie in _comma-separated values_)
 jedoch Semikolons (da "," im Deutschen zur Trennung von Nachkommastellen
-verwendet wird, im Englischen ist dafür "." zustängig). In diesem Fall
+verwendet wird, im Englischen ist dafür "." zuständig). In diesem Fall
 funktioniert jedoch Folgendes:
 
 ```{r, eval=FALSE}
@@ -450,7 +450,7 @@ pbinom(q = n_males - 1,
 Das Ergebnis ist statistisch signifikant bei einem typischen Signifikanzlevel von
 $p \leq 0.05$ ($5~\%$). Merke an dieser Stelle, dass wir nicht sagen
 können, etwas bewiesen zu haben, wir können jedoch sagen, dass wir die
-Nullhypothese ("es gibt keinen Effekt vov Gender auf die
+Nullhypothese ("es gibt keinen Effekt von Gender auf die
 Auswahl ins Datenset") ablehnen.
 
 > _Thus, we reject the null hypothesis._

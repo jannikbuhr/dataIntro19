@@ -8,7 +8,7 @@ knitr::opts_chunk$set()
 
 Da R eine Programmiersprache ist befassen wir uns zunächst
 mit der grundlegenden Syntax sowie den basis-Datenstrukturen,
-in denene wir Daten in R vorfinden können.
+in denen wir Daten in R vorfinden können.
 
 Öffne ein R-Script (eine Textdatei mit der Endung `.R`; In RStudio der Button oben
 links, oder der Shortcut Ctrl+Shift+N)^[Für Mac-Nutzer wird Ctrl durch Cmd ersetzt].
@@ -19,7 +19,7 @@ in die Konsole schickst. Dort wird dann die ausgewählte Zeile / der markierte C
 Inspiriert wurde diese Zusammenfassung von [learnXinYminutes](https://learnxinyminutes.com/docs/r/). Die aufgeführten
 Konzept liegen der Funktionsweise von R zu Grunde, dennoch ist
 tieferes Verständnis nicht zwingend notwendig, um effektiv mit
-Werkzeugen wie den Packages des `tidyverse` zu arbeiten. Daher: nicht verzwifeln,
+Werkzeugen wie den Packages des `tidyverse` zu arbeiten. Daher: nicht verzweifeln,
 wenn unweigerlich etwas nicht funktioniert! Das ist völlig normal.
 Selbst erfahrene Programmierer stolpern regelmäßig über
 fehlende Kommata oder Klammern.
@@ -32,13 +32,13 @@ knitr::include_graphics("img/errors.jpg")
 
 ```{r}
 # Kommentare starten mit dem #-Symbol.
-# Diese Zeilen tuen also nichts.
+# Diese Zeilen tun also nichts.
 # Aber erinnern dein zukünftiges Ich daran, was du eigentlich vor hattest
 ```
 
 Zahlen in R können als ganze Zahlen (_integer_),
 rationale Zahlen (_numeric_ oder auch _double_) oder, wenn
-auch selten verwendet, als complexe Zahlen (_complex_) vorliegen.
+auch selten verwendet, als komplexe Zahlen (_complex_) vorliegen.
 Zusätzlich gibt es noch text (_character_) und Wahr/Falsch (_boolean_ oder auch _logical_)
 sowie kategorische Daten (_factor_), `NULL` und Not Assigned (`NA`).
 
@@ -71,7 +71,7 @@ Werte können Variablen zugewiesen werden, um später Zugriff darauf zu haben.
 avogadro <- 6.02e23
 
 # Neben der normalen Art der Zuweisung ( mit <- )
-# funtioniert auch Folgendes
+# funktioniert auch Folgendes
 eulers_number = 2.718282
 "Harry Potter" -> main_character
 ```
@@ -171,7 +171,7 @@ as.character(12)
 as.integer("12")
 ```
 
-Du kannst deine eigenen Funtionen definieren:
+Du kannst deine eigenen Funktionen definieren:
 
 ```{r}
 ## Everything that does something is a function, everything that exists is an object
