@@ -1,7 +1,12 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
 # An die Daten {#day2}
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(eval = TRUE)
 ```
 
 ## Workflow einer Datenauswertung
@@ -10,14 +15,89 @@ knitr::opts_chunk$set(eval = FALSE)
 knitr::include_graphics("img/workflow.png")
 ```
 
-### Tidyverse: The pipe and dplyr verbs
+## Rmarkdown
 
-The pipe
+[Rmarkdown guide](https://bookdown.org/yihui/rmarkdown/)
 
-```{r, eval = FALSE}
-# f(g(x)) = x %>% g %>% f
-sum(1:10)
-1:10 %>% sum()
+```{r}
+# demo
+
+# create new rmd
+
+# knit rmd
+
+# Clear document
+
+# Add your own name, code etc.
+
+# Show resources
+```
+
+## Wiederholung Tag 1
+
+```{r}
+# Was ergibt
+# c("12", 13, 14)[2] + 1
+# Warum?
+
+# Erstelle einen Vektor x mit den Zahlen von 1 bis 10
+x <- 1:10
+
+# Erstelle noch einen Vektor und nenne ihn y
+y <- x
+
+# Plotte die bei Vektoren (Scatterplot)
+plot(x, y)
+
+# Lege eine Linie durch die Datenpunkte,
+model <- lm(y ~ x)
+abline(model, col = "red")
+# Wie erfahren wir mehr über das resultierende Objekt?
+# (Zwei wichtige Funktionen!)
+# str(model)
+# ?lm
+# lm() # press F1
+```
+
+## Reading Data
+
+`readr`-package
+
+```{r}
+# demo readr
+# load tidyverse
+library(tidyverse)
+# show package namespace
+# readr::
+# explain function names
+# read_
+
+# Create Data with tibble
+# name (char), hairlengths (0,1) , row (1,2)
+# see excel.
+
+# Show data in Excel
+# explain two types of csvs, tsv etc.
+
+# Read data with read_csv
+students <- read_csv("data/students.csv")
+students
+
+# Write Data with write_csv()
+# write_csv2(students, "data/students2.csv")
+
+# Mention the readxl package
+# readxl::read_excel("data/students.xlsx")
+```
+
+
+## The pipe and dplyr verbs
+
+The `dplyr` package and the pipe (`%>%`)
+
+```{r}
+# Demo pipe
+
 ```
 
 Dplyr verbs:
@@ -28,22 +108,72 @@ Dplyr verbs:
 - mutate
 - summarise
 
+- count
+
 Dpylr adverbs
 
 - group_by
 
-```{r, eval = FALSE}
-starwars %>%
-  select(name, height, mass, gender) %>% 
-  filter(height > 100) %>% 
-  arrange(desc(mass)) %>% 
-  mutate(height = height / 100) %>%
-  group_by(gender) %>%
-  summarise(mean_mass = mean(mass, na.rm = TRUE))
+**select**
+
+```{r}
+# demo select
+# e.g. name and row
+# excercise: select all but one column
+```
+
+**filter**
+
+```{r}
+# demo filter
+# show only the students in the first row
+```
+
+**mutate**
+
+```{r}
+# demo mutate
+# convert heirlength from 0 and 1 to "s" and "l"
+
+# Add the length of the name as a new column
+
+```
+
+**arrange**
+
+```{r}
+# demo arrange
+# arrange by name lengths
+```
+
+**count**
+
+```{r}
+# demo count
+```
+
+**summarise**
+
+```{r}
+# demo summarise
+# what is the average name length
+```
+
+**group_by and summarise**
+
+```{r}
+# demo
+# do students with longer hair have longer names on average?
+```
+
+**ungroup**
+
+```{r}
+# demo 
 ```
 
 
-## What is Probability
+## Was ist Wahrscheinlichkeit?
 
 Es gibt zwei Konzepte von Wahrscheinlichkeit (Probability, $P$ ):
 
@@ -53,41 +183,38 @@ can be empirically measured or predicted from a model [@motulsky2017].
 
 ### Beispiel:
 
-Drawing from a hat (categorical / discrete data)
+Kategorische / diskrete Daten: Blind aus einem "Hut" ziehen.
 
 ```{r, eval = FALSE}
 # Code
-# create hat of hairlengths
-hat <- c(rep("l", 4), rep("s", 6))
-# sample / draw from hat
-# for the first row
-sample(hat, size = 5)
+# create a "hat" of hairlengths
+# with the numbers observed in our course
 
-# How many have long hair?
-res <- sample(hat, size = 5)
-res == "l"
-sum(res == "l")
+# sample / draw from said hat
+# the same number of observed long haired in first row
+
+# Look at the help for sample (default: replace = FALSE)
+
+# How many in this sample have long hair?
 
 # Simulate
-for (i in 1:10) {
-  print(i)
-}
-
+# Explain for-loop
 
 ## Simulation
-N <- 1000
-long_hair_numbers <- 1:N
-for (i in 1:N) {
-  res <- sample(hat, 5)
-  long_hair_numbers[i] <- sum(res == "l")
-}
+# set N
+# create empty vector for the sum from each draw
+# loop over 1:N, sample, XXX from the hat, count "l", assign the result
+
 # Histogram, Mean, Median
-hist(long_hair_numbers, breaks = 0:5)
-mean(long_hair_numbers)
-median(long_hair_numbers)
+# histogram of results
+# mean of results
+# median
+# Talk about difference betweeen mean and median
+# demonstrate with custom made vectors
 
 # How surprised should we be? -> Calculate probabilty for random event
-sum(long_hair_numbers >= 4) / N
+# sum of sum greater than or equal to observed frequency
+
 ```
 
 ### P-Values
@@ -95,48 +222,60 @@ sum(long_hair_numbers >= 4) / N
 Eingeführt in den 1920-ern von Ronald Fisher:
 
 > _"The P value is defined as the probability, under the assumption of no effect or no difference (the null hypothesis), of obtaining a result equal to or more extreme than what was actually observed."_
-> $-$ (Original: [tatistical_Methods_for_Research_Workers](https://en.wikipedia.org/wiki/Statistical_Methods_for_Research_Workers)) [@fisher1990]
+> $-$ (Original: [Statistical Methods for Research Workers](https://en.wikipedia.org/wiki/Statistical_Methods_for_Research_Workers)) [@fisher1990]
 
-
-Nach Konvention: p ≤ 0.05 ist “significant” p ≤ 0.01 ist “highly significant”
+Nach Konvention: p ≤ 0.05 wird "significant" genannt.
 
 In other words, a p-Value is...
 
 > _"... a measure of how surprised you should be if there is no actual difference […], but you got data suggesting there is"_
 >  $-$ Alex Reinhart [@reinhart2015]
 
-```{r, eval = FALSE}
+
+
+```{r}
 # Calculate the exact p-value:
 # hypergeometric distribution
 # Cummulative probabilities!
 # default: P(X <= x)
-
+# phyper
 # long_hair_numbers >= 4
-1 - phyper(q = 3, m =  4, n =  6, k =  5)
+# 1 - phyper(q = 3, m =  4, n =  6, k =  5)
+
+
 barplot(dhyper(x = 0:5, m = 4, n =  6, k =  5), names.arg = 0:5)
 # P(X ≥ 6) = 1 - P(X ≤ 5)
 ```
+
 
 ### Resourcen
 
 - [Seeing Theory](https://seeing-theory.brown.edu/)
 
 
+## Transfer to new Data
 
-## Import
+Starwars
 
-Link to the data:
+```{r}
+# Preview the dataset
 
-[https://github.com/jannikbuhr/dataIntro19/tree/master/data](https://github.com/jannikbuhr/dataIntro19/tree/master/data)
+# select the columns name, height, mass, gender
 
+# who is the heaviest?
 
-```{r, eval = FALSE}
-library(tidyverse)
-starwars <- read_csv("data/01_starwars_example.csv")
+# convert height from cm to m
+
+# which gender is taller in StarWars?
+
+# Is a summary by mean really the best thing to do?
+
+# Look at the distributions
+
 ```
 
-<!-- Das war einfach, wird aber nicht immer so sein. -->
-<!-- Messy Data Example -->
+
+
 
 
 ## Visualize
@@ -161,11 +300,6 @@ knitr::include_graphics("img/jabba.png")
 
 ## Transform 
 
-<!-- Jabba ist an dieser Stelle ganz klar ein Outlier. Und obwohl wir nicht einfach so Datenpunkte aus unserer Analyse entfernen können, ohne einen triftige Grund zu haben, wollen wir an dieser Stelle mal ein Auge zudrücken, um die anderen Charakter -->
-<!-- vernünftig auf einen Graph packen zu können. -->
-
-<!-- Außerdem sind die Massen in $kg$ angegeben, die Größen jedoch in $cm$ und -->
-<!-- wir hätten gerne überall SI-Einheiten: -->
 
 ```{r}
 # starwars <-
@@ -189,7 +323,7 @@ knitr::include_graphics("img/jabba.png")
 ```
 
 ```{r}
-# starwars %>% 
+# starwars %>%
 #   filter(!is.na(height), !is.na(gender)) %>%
 #   ggplot(aes(height, fill = gender)) +
 #   geom_histogram(alpha = 0.8, position = "identity") +
@@ -198,7 +332,7 @@ knitr::include_graphics("img/jabba.png")
 ```
 
 ```{r}
-# starwars %>% 
+# starwars %>%
 #   filter(!is.na(height), !is.na(gender)) %>%
 #   ggplot(aes(height, fill = gender)) +
 #   geom_histogram(alpha = 1, position = "identity") +
@@ -209,23 +343,14 @@ knitr::include_graphics("img/jabba.png")
 
 
 ```{r}
-# starwars %>% 
+# starwars %>%
 #   filter(!is.na(height), !is.na(gender)) %>%
-#   ggplot(aes(height, fill = gender, color = gender)) +
+#   ggplot(aes(height, fill = gender)) +
 #   geom_density(alpha = 0.8) +
 #   theme_bw() +
 #   scale_fill_brewer(type = "qual")
 ```
 
-```{r}
-# starwars %>% 
-#   group_by(species) %>% 
-#   summarise(
-#     sd = sd(mass, na.rm = TRUE),
-#     mass = mean(mass, na.rm = TRUE)
-#     ) %>% 
-#   arrange(-mass)
-```
 
 ```{r}
 # starwars %>% 
@@ -255,7 +380,7 @@ Welche Species hat die schwersten Vertreter?
 
 ### Wahrscheinlichkeit
 
-Wie Wahrscheinlich ist es, bei gleicher Verteilung von Geschlechtern im Universum,
+Wie wahrscheinlich ist es, bei gleicher Verteilung von Geschlechtern im Universum,
 allein durch Zufall diesen oder einen höheren Männerüberschuss in StarWars zu erhalten?
 
 ```{r}
@@ -268,7 +393,52 @@ sum(male, female)
 Simulate drawing 81 characters from the hat. Repeat this 1000 times. 
 How often do you obtain 62 or more male characters?
 
+
 ```{r}
+# create hat with male and female
+
+# draw 81 with replacement
+
+# table
+
+# create a function that draws n from a hat and counts males
+
+# map_int over that function
+
+# hist
+
+# sum draws >= 62
+
+# calculate exact p-value with pbinom
+# difference between pbinom and phyper: replacement!
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r, eval=FALSE, include=FALSE}
 # create hat with male and female
 hat <- c("male", "female")
 # draw 81 with replacement
@@ -292,15 +462,6 @@ sum(draws >= 62)
 
 # Use pbinom to find the exact p-value
 1 - pbinom(62, 81, 0.5)
-```
-
-### UCBAdmissions (maybe)
-
-```{r}
-# UCBAdmissions
-# a 3 dimensional array, not so much fun to work with
-# we can turn it into rectangular data
-df <- as_tibble(UCBAdmissions)
 ```
 
 

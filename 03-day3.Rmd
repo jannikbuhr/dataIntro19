@@ -8,12 +8,15 @@ knitr::opts_chunk$set(eval = FALSE)
 
 ### Anscombes Quartet
 
-Link to Data
+Eine Notiz zu "Tidy Data" und dem `tidyr` package.
 
-[https://github.com/jannikbuhr/dataIntro19/tree/master/data](https://github.com/jannikbuhr/dataIntro19/tree/master/data)
-
-```{r, eval = FALSE}
-anscombe <- read_csv("./data/02_anscombe_cleaned.csv")
+```{r}
+# demo 
+# anscombe %>%
+#  pivot_longer(everything(),
+#    names_to = c(".value", "set"),
+#    names_pattern = "(.)(.)"
+#  )
 ```
 
 Summarise
@@ -30,7 +33,54 @@ Summarise
 #   )
 ```
 
-Plot
+Barplot
+
+```{r}
+# make barplot
+# add error bars
+```
+
+Scatterplot
+
+```{r}
+# explain different error bars
+## show points
+
+```
+
+
+
+Distribution
+
+```{r}
+## show curve, 68.3%, 95.5%, 99.7%
+# curve(dnorm, -5, 5)
+# abline(v = 1 , col = "red")
+# abline(v = -1, col = "red")
+# abline(v = 2 , col = "red")
+# abline(v = -2, col = "red")
+# abline(v = 3 , col = "red")
+# abline(v = -3, col = "red")
+# abline(h = 0)
+
+## explain  sd
+##          var
+##          sem
+```
+
+
+Boxplot
+
+```{r}
+
+```
+
+
+
+
+Friends don't let friends make barplots!
+
+Other plot
 
 ```{r}
 # anscombe %>% 
@@ -75,7 +125,9 @@ Das Forschungspaper findet ihr [hier](https://www.autodeskresearch.com/publicati
 
 
 
-```{r, echo=FALSE}
+
+
+```{r, include = FALSE, echo=FALSE}
 # Setting a cut-off for AREScores (e.g. > 5) reduces ordinal data 
 # to categorical data! We lose information!
 # Instead, we can show distributions as boxplots:

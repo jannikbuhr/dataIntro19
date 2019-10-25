@@ -115,3 +115,16 @@ knitr::opts_chunk$set(eval = FALSE)
 
 ```
 
+Sind die folgenden Statements zu P-Values wahr?
+
+1. With a p-value of 0.02, there is a 2% chance that the result occurred due to coincidence.
+2. With a p-value of 0.02, we can be 98% confident that our hypothesis is true.
+3. With a p-value of 0.02, there is a 2% chance that the null hypothesis is true.
+4. With a p-value of 0.02, the result will be reproducible in 98% of the cases.
+5. If we always apply a p-value cut-off of 0.05, we will be wrong in 5% of the cases.
+6. If we always apply a p-value cut-off of 0.05, we will miss 5% of true effects.
+7. If we always apply a p-value cut-off of 5%, we will identify a significant effect in 5% of the cases where there is no effect.
+
+
+
+
