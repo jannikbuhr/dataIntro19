@@ -5,8 +5,23 @@
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
+## Wiederholung R
+
+
+
+## Wiederholung Statistik
+
+### Sind die folgenden Statements zu P-Values jeweils wahr?
+
+1. With a p-value of 0.02, there is a 2% chance that the result occurred due to coincidence.
+2. With a p-value of 0.02, we can be 98% confident that our hypothesis is true.
+3. With a p-value of 0.02, there is a 2% chance that the null hypothesis is true.
+4. With a p-value of 0.02, the result will be reproducible in 98% of the cases.
+5. If we always apply a p-value cut-off of 0.05, we will be wrong in 5% of the cases.
+6. If we always apply a p-value cut-off of 0.05, we will miss 5% of true effects.
+7. If we always apply a p-value cut-off of 5%, we will identify a significant effect in 5% of the cases where there is no effect.
+
 ```{r,echo=FALSE}
-## Morning session: 
 # The jelly bean problem:
 # How do p-values behave if there is NO difference 
 # ("under the null hypothesis"):
@@ -37,17 +52,8 @@ knitr::opts_chunk$set(eval = FALSE)
 # Power analysis: How likely is it to miss
 # a true effect?
 
-
-
 # With Power analysis, I can estimate a sample size
 # BEFORE performing the experiment:
-
-
-## Afternoon session: 
-# How to handle files
-# that are not correctly formated:
-
-# How to handle multiple files in a loop:
 
 ```
 
@@ -71,12 +77,16 @@ curve(michaelis_menten_fun(conc = x, Vm = 200, K = 0.06),
 model <- nls(rate ~ michaelis_menten_fun(conc, Vm, K),
           start = list(Vm = 200, K = 0.1), data = PurTrt)
 
+Vm_est <- coef(model)[1]
+K_est  <- coef(model)[2]
 
-x0 <- seq(min(PurTrt$conc), max(PurTrt$conc), length = 50)
-y0 <- predict(model, newdata = list(conc = x0))
 plot(PurTrt$conc, PurTrt$rate)
-lines(x0, y0, col = 'red')
+curve(michaelis_menten_fun(x, Vm = Vm_est, K = K_est), add = TRUE, col = "red")
 
+
+ggplot(PurTrt, aes(conc, rate)) +
+  geom_point() +
+  stat_function(fun = ~michaelis_menten_fun(conc = .x, Vm = Vm_est, K = K_est))
 
 ```
 

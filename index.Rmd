@@ -17,10 +17,13 @@ editor_options:
 ```{r setup, include=FALSE}
 options(
   tidyverse.quiet = TRUE,
-  htmltools.dir.version = FALSE, formatR.indent = 2,
-  width = 55, warnPartialMatchAttr = FALSE,
+  htmltools.dir.version = FALSE,
+  formatR.indent = 2,
+  width = 55,
+  warnPartialMatchAttr = FALSE,
   warnPartialMatchDollar = FALSE
 )
+
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 

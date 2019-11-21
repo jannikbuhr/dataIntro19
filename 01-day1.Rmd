@@ -1,7 +1,7 @@
 # Los Geht's {#day1}
 
 ```{r include=FALSE}
-knitr::opts_chunk$set()
+knitr::opts_chunk$set(eval = TRUE, warning = FALSE, message = FALSE)
 ```
 
 ## Grundlegend Strukturen in R

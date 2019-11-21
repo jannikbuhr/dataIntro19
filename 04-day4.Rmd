@@ -1,88 +1,665 @@
-
-# Folgt {#day4}
+---
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+# Statistische Tests und Power {#day4}
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
-```{r, echo = FALSE}
-## Wilcoxon rank sum test: 
-# The hat contains 11790 balls (genes in our analysis), each has a number 
-# (the rank that represents its affinity to the RBP). 
-# When 43 balls are drawn randomly (acquire our motif specifically in mouse genes), 
-# what is the probability to obtain a rank sum of at least 291610?
-# Let's simulate this situation:
+## Lösung für Tag 3
 
-# how often did we obtain or even exceed a sum of 291610?
+- [Ausgangsdokument](/misc/dataIntro19_day03/analysis.rmd)
+- [Ergebnis als html Dokument](/misc/dataIntro19_day03/analysis.html)
+- [Ergebnis als pdf Dokument](/misc/dataIntro19_day03/analysis.pdf)
 
-# This is a normal distribution!
+## Der zentrale Grenzwertsatz (CLT)
 
+Von Verteilungen zu Verteilungen von Mittelwerten
 
-# Instead of using the normal distribution as an approximation,
-# the Wilcoxon rank sum test will take all possible combinations of "balls" (= ranks)
-# into account, up to a sample size of 50 and if there are no ties ("balls" with the same rank)
-# Check:
-?wilcox.test()
+Was wäre, wenn Johanna als Master Studentin nicht ganz
+so fleißig gewesen wäre, und statt 300 je Zell Typ nur
+je 30 mal gezählt hätte?
 
-# Perform the test on the IP data:
+Der Einfachheit nehmen wir an, dass die 300 Zellen
+komplett repräsentativ für alle WT bzw. KO Zellen sind,
+also die Gesamtpopulation darstellen.
 
-## The t-test:
-# For mRNA half-life measurement:
+Nun ziehen wir zufällig daraus je 30 Zellen.
 
-# How would half-lives behave, if there were no difference between the two conditions?
-# They would have THE SAME mean and they would have THE SAME standard deviation.
-# And we HOPE, that they would follow a normal distribution... (hard to say from n = 3):
+Wie sieht nun die Verteilung der Mittelwerte aus?
+
+Das machen wir jetzt 1000 mal.
 
 
-# Now, we draw 3 observations and call them ctrl, and 3 observation that we call kd.
-# What happens to the effect sizes, if we repeat this 1000 times?
+```{r}
+# load tidyverse
+library(tidyverse)
 
-# The result is not a normal distribution! It is broader. 
+# import data
+data <- read_csv("data/03_inclusion_bodies.csv")
 
-# perform a t-test on our half-life measurements:
+# attach data, handle with CARE!
+attach(data)
+```
+
+Ctrl + Alt + I
+
+```{r}
+# sample n = 30 points from both vectors
+subset <- sample(wt, 30)
+
+# calculate means
+mean(subset)
+```
 
 
-## Exercises:
-# 1. Perform the wilcoxon rank-sum test and the t-test on the P-body counts in example3.csv.
-# Is there a significant difference between ko and wt cells?
+```{r}
+# put this in a function of n and x
+get_subset_mean <- function(n, x) {
+  subset <- sample(x, n)
+  mean(subset)
+}
 
-# 1. Use example3.csv. Imagine that the 300 cells on my microscope slide are perfectly representative for this cell type 
-# in general. Imagine that we count P-bodies in less cells than 300, 
-# and that the same cell could be selected more than once. 
+# test the function
+get_subset_mean(2, wt)
+```
 
-# 1. The impact of sample size on normality of means:
-# 1a. Check, whether the 300 wt values follow a normal distribution.
 
-# 1b. Now, randomly sample 3 wt values from the 300 values (with replacement) and calculate the mean.
-# Repeat this in a loop 1000 times. Are your 1000 means normal?
+```{r}
+# map this function of 1:N with N = 1000
+N <- 1000
+Ms <- map_dbl(1:N, ~ get_subset_mean(30, wt) )
 
-# 1c. Vary the number of values that you select (sample size). 
-# What happens when you increase sample size? 
+# show histogram of results for wt and ko
+hist(Ms)
+```
 
-# 2. The impact of sample size on the standard error of the mean
-# (= standard deviation of means):
-# Repeat what you did in 1c. This time, select 10, 40 or 160 values.
-# Calculate the standard deviation of the 1000 means that you obtain.
-# How does it change with sample size? What is the mathematical relationship to sample size?
+```{r}
+hist(wt)
+```
 
-# 3. The impact of sample size on p-values: 
-# 3a. This time, randomly select 3 values from the wt vector 
-# and 3 values from the ko vector. Perform a t-test and get the p-value.
-# Repeat this 1000 times and look at the p-values as a histogram.
+Mit großem n wird die Verteilung der Mittelwerte symmtrisch,
+obwohl die Populationsverteilung unsymmtrisch ist.
 
-# 3b. Vary the number of values that you select. What happens to the p-values?
+Nach dem Central Limit Theorem folgen die Mittelwerte
+einer Normalverteilung.
 
-## Homework
-# You can easily create artificial data. For example:
-5:100 # gives you integer numbers from 5 to 100
-seq(5, 100, by = 5) # gives you the numbers from 5 to 100 in steps of 5
-c(1:100, 201:300) # concatenates the numbers from 1 to 100 and from 201 to 300
-# Can you create ...
-# ... two data sets with the same median, but a significant difference if you perform a
-# wilcoxon rank sum test?
-#  ... two data sets with the same mean, but a significant difference if you perform a
-# wilcoxon rank sum test?
+
+```{r}
+# show qqnorm of Ms
+qqnorm(Ms)
+qqline(Ms, col = "red")
+```
+
+```{r}
+# Explain quantiles again, but better this time
+# using curve for dnorm, pnorm, qnorm
+curve(dnorm, -3, 3)
+curve(pnorm, -3, 3)
+curve(qnorm, 0, 1)
+```
+
+Der zentrale Grenzwertsatz gilt erst bei großen _sample sizes_.
+Darunter ist die Verteilung der Mittelwerte an den Rändern
+dicker, als eine Normalverteilung.
+
+Daher verwenden wir (sicherheitshalber) für
+die meisten Daten und statistischen Tests die T-Verteilung,
+nicht die Normalverteilung.
+
+```{r}
+curve(dnorm, -3, 3)
+tdist <- function(x) dt(x, df = 29)
+
+curve(tdist, -3, 3, add = TRUE, col = "red")
+```
+
+Gleichermaßen können wir mit der t-Verteilung
+95% Konfidenz Intervalle berechnen.
+
+```{r}
+# show hist of Ms
+hist(Ms)
+
+# add line for true mean of wt
+abline(v = mean(wt), col = "red", lwd = 3)
+```
+
+
+```{r}
+# use t.test for conf.int
+subset <- sample(wt, 30)
+mean(subset)
+
+lims <- t.test(subset)$conf.int
+
+hist(subset)
+abline(v = lims[1], col = "red")
+abline(v = lims[2], col = "red")
+```
+
+
+## Signifikanztests
+
+### Students T-Test
+
+```{r}
+# perform t.test of wt and ko
+hist(wt)
+hist(ko)
+
+t.test(wt, ko)
+```
+
+```{r}
+subset_wt <- sample(wt, 3)
+subset_ko <- sample(ko, 3)
+t.test(subset_wt, subset_ko)
+```
+
+
+### Wilcoxon Rank Sum Test
+
+- Parametrische vs. Nicht-parametrisch Tests
+
+```{r}
+data %>%
+  pivot_longer(c(1,2)) %>% 
+  ggplot(aes(name, value)) +
+  geom_jitter()
+```
+
+
+```{r}
+# perform wilcox.test
+subset_wt <- sample(wt, 3)
+subset_ko <- sample(ko, 3)
+wilcox.test(subset_wt, subset_ko)
+```
+
+```{r}
+x <- c(1,2,20, 1239132, 3, 5)
+rank(x)
+```
+
+
+### Type I und Type II Errors
+
+- Type I:  False Positive (rejection of a true null hypothesis)
+- Type II: False Negative (non-rejection of false null hypothesis)
+
+
+```{r}
+# define 2 dnorm functions with different means
+norm1 <- function(x) dnorm(x, 0, 1)
+norm2 <- function(x) dnorm(x, 0, 1)
+
+# plot curves for both
+curve(norm1, -3 , 3)
+curve(norm2, add = TRUE, col = "red", -3, 3)
 
 
 ```
+
+
+Demonstrate Type I errors
+
+#### Type I:  False Positive
+
+```{r}
+# define n
+n <- 3
+
+# draw twice from the same normal distributions
+draw1 <- rnorm(n, 0, 1)
+draw2 <- rnorm(n, 0, 1)
+
+# convert to tibble, pivot_longer, plot points
+tibble(draw1, draw2) %>% 
+  pivot_longer(c(1,2)) %>% 
+  ggplot(aes(name, value)) +
+  geom_jitter()
+
+# do the t.test
+t.test(draw1, draw2)
+
+# do the rank sum test
+wilcox.test(draw1,  draw2)
+
+# show with different n
+```
+
+#### Type II errors
+
+Demonstrate Type II errors
+
+$$\beta=\text{Type II error rate}$$
+
+```{r}
+# define n
+n <- 3
+
+# draw from different normal distributions
+draw1 <- rnorm(n, 0, 1)
+draw2 <- rnorm(n, 1, 1)
+
+# convert to tibble, pivot_longer, plot points
+tibble(draw1, draw2) %>% 
+  pivot_longer(c(1,2)) %>% 
+  ggplot(aes(name, value)) +
+  geom_jitter()
+
+# do the t.test
+t.test(draw1, draw2)
+
+# do the rank sum test
+wilcox.test(draw1,  draw2)
+```
+
+
+### Statistical Power
+
+$$Power = 1-\beta$$
+
+```{r}
+# show power.t.test
+power.t.test(delta = 1, sd = 1, power = 0.8)
+```
+
+
+### The Jelly Bean Problem (Multiple Testing)
+
+```{r beans, fig.cap="(Quelle: Randall Munroe, https://xkcd.com/882/ )", include=FALSE, eval=TRUE}
+knitr::include_graphics("img/significant.png")
+```
+
+Die False Discovery Rate (FDA) kontrollieren:
+
+- Bonferroni Korrektur
+
+```{r}
+# show p.adjust
+p.adjust(c(0.05, 0.0001, 0.003323, 0.7), method = "bonferroni")
+```
+
+Jeder P-Value wird mutipliziert mit der Zahl der Tests
+
+- Benjamini-Hochberg Prozedur
+  - Ordne alle p-values in aufsteigender Reihenfolge
+  - Wähle eine FDR ($q$) und nenne die Anzahl deiner Tests $m$
+  - Finde den größten p-value für den gilt:
+    $p \leq iq/m$ mit dem Index des p-values $i$.
+
+```{r}
+# show p.adjust for BH
+p.adjust(c(0.05, 0.0001, 0.003323, 0.7), method = "BH")
+```
+
+
+### The Base Rate Fallacy
+
+Beispiel: Mammogramm
+
+- Sensitivity = Power =  true positive rate
+- Specificity = true negative rate = $1-\alpha$
+
+```{r}
+# calculate 
+total <- 1000
+positives <- 10
+negatives <- total - positives
+sensitivity <- 0.9
+specificity <- 1 - 0.08
+true_positives  <- sensitivity * positives
+false_positives <- (1 - specificity) * negatives
+p_positive <- true_positives / (true_positives + false_positives)
+p_positive
+```
+
+**Folgendes muss nicht mitgeschrieben werden!**
+
+```{r}
+theme_set(theme_void())
+
+data.frame(
+  parts = c("positives", "negatives"),
+  vals = c(positives, negatives)
+) %>% 
+  ggplot(aes(fill = parts, values = vals)) +
+  waffle::geom_waffle(n_rows = 20) +
+  coord_equal() +
+  scale_fill_manual(values = c("white", "red"))
+```
+
+```{r}
+data.frame(
+  parts = c("detected positives", "not detected positives (false negatives)", "negatives"),
+  vals = c(true_positives, positives - true_positives, negatives)
+) %>% 
+ggplot(aes(fill = parts, values = vals)) +
+  waffle::geom_waffle(n_rows = 20) +
+  coord_equal() +
+  scale_fill_manual(values = c("darkred", "white", "red"))
+```
+
+```{r}
+data.frame(
+  parts = c("detected positives",
+            "not detected positives (false negatives)",
+            "false positives",
+            "true negatives"),
+  vals = c(true_positives,
+           positives - true_positives,
+           round(false_positives),
+           negatives)
+) %>% 
+  ggplot(aes(fill = parts, values = vals)) +
+  waffle::geom_waffle(n_rows = 20) +
+  coord_equal() +
+  scale_fill_manual(values = c("darkred", "palevioletred1", "red", "white"))
+```
+
+
+### Resourcen 
+
+- Statistics Done Wrong: https://www.statisticsdonewrong.com/
+- Intuitive Biostatistics, auch in der Uni-Bib: https://katalog.ub.uni-heidelberg.de/cgi-bin/titel.cgi?katkey=68260114&sess=050a1316767b181982c9bce94283e9ae&query=Intuitive%20Biostatistics
+- https://www.graphpad.com/guides/prism/8/statistics/index.htm
+
+## Übungen
+
+### Zeige die folgenden Statements anhand von Simulationen in R
+
+#### Wenn Du die Sample Size n erhöhst, verringert sich der Standard Error of the Mean mit der Wurzel von n.
+
+- Ziehe 10 Zellen aus dem wt (oder ko) Vektor
+- Berechne den Mittelwert
+- Wiederhole das Ganze 1000 mal
+- Berechne die SD der 1000 Mittelwerte
+- Ziehe nun 40 statt 10 Zellen und wiederhole die Schritte
+- Schreibe eine Funktion, die n Zellen zieht, die Schritte ausführt
+  und die SD ausgibt
+- Füttere die Zahlen von 1 bis 100 in die Funktion
+  (mit map_dbl) und plotte das Ergebnis
+    
+```{r}
+library(tidyverse)
+
+read_csv("data/03_inclusion_bodies.csv") %>% attach()
+```
+
+```{r}
+draw <- sample(wt, 10)
+mean(draw)
+```
+
+```{r}
+get_sample_mean <- function(x, n) {
+  draw <- sample(x, n, replace = TRUE)
+  mean(draw)
+}
+```
+
+```{r}
+get_sample_mean(wt, 10)
+```
+
+```{r}
+N <- 1000
+many_means <- map_dbl(1:N, ~get_sample_mean(wt, 10))
+sd(many_means)
+```
+
+```{r}
+many_means <- map_dbl(1:N, ~get_sample_mean(wt, 40))
+sd(many_means)
+```
+
+```{r}
+# explain default arguments and scoping
+get_sd_of_many_means <- function(n, x, N = 1000) {
+  many_means <- map_dbl(1:N, ~get_sample_mean(x, n))
+  sd(many_means)
+}
+```
+
+```{r}
+n_max <- 100
+sds_by_n <- map_dbl(1:n_max, get_sd_of_many_means, x = wt)
+```
+
+```{r}
+plot(x = 1:n_max,
+     y = sds_by_n, type = "p")
+
+curve(sd(wt)/sqrt(x), add = TRUE, col = "red")
+```
+
+```{r}
+# talk about difference between sample sd and population sd
+```
+
+
+#### Ein 95% Konfidenzinterval eines Samples enthält den Populationsmittelwert mit einer Wahrscheinlichkeit von 95%.
+
+- Ziehe 30 Zellen aus dem wt (oder ko) Vektor
+- Berechne die Limits des CI (Confidence Interval)
+- Schreibe eine Funktion, oben genanntes tut und
+  führe sie 1000 mal aus.
+- Schreibe eine Funktion, die testet, ob ein Set an Limits den
+  wahren Mittelwert einschließt
+- Wende sie auf die 1000 Sets der Limits an
+- Wie oft (prozentual) erhältst du TRUE?
+
+```{r}
+draw <- sample(wt, 30)
+```
+
+```{r}
+test_results <- t.test(draw)
+```
+
+```{r}
+test_results
+```
+
+```{r}
+summary(test_results)
+```
+
+```{r}
+str(test_results)
+```
+
+```{r}
+test_results$conf.int
+```
+
+```{r}
+get_sample_ci <- function(x, n) {
+  draw <- sample(x, n, replace = TRUE)
+  t.test(draw)$conf.int
+}
+```
+
+```{r}
+get_sample_ci(wt, 30)
+```
+
+```{r}
+CIs <- map(1:1000, ~get_sample_ci(wt, 30))
+```
+
+```{r}
+head(CIs)
+```
+
+```{r}
+# explain list subsetting
+CIs[1]
+```
+
+```{r}
+CIs[[1]]
+```
+
+```{r}
+CIs[[1]][1]
+```
+
+
+```{r}
+test_ci <- function(limits, true_mean) {
+  limits[1] < true_mean & limits[2] > true_mean
+}
+```
+
+
+```{r}
+# sidenote
+# note difference between & and &&
+c(TRUE, TRUE) &  c(FALSE, TRUE)
+```
+
+```{r}
+c(TRUE, TRUE) && c(FALSE, TRUE)
+```
+
+
+```{r}
+results <- map_lgl(CIs, test_ci, true_mean = mean(wt))
+head(results)
+```
+
+```{r}
+mean(results)
+```
+
+```{r}
+# talk about organisation of code
+```
+
+#### Weitere Hinweise
+
+```{r}
+# check out
+?map
+# for the subtle differences between:
+map(1:100, ~ .x + 1)
+# and
+add_one <- function(x) x + 1
+map(1:100, add_one)
+# and
+map_dbl(1:100, add_one)
+
+# especially the meaning of ~ (speak: lambda)
+map(1:5, ~ print("hi"))
+
+# more examples
+map(1:10, paste, "hi")
+is_even <- function(x) x %% 2 == 0
+map_lgl(1:10, is_even)
+
+# Note: Often, you don't need a map function
+# Because many functions in R are vectorised by default:
+x <- 1:10
+y <- 1:10
+# thus, just write
+x + y
+# instead of
+map2_dbl(x,y, `+`)
+```
+
+###  Veranschauliche die folgenden Konzepte anhand von Simulationen auf den vorliegenden Daten
+
+#### Sensitivity: Wie groß ist die Wahrscheinlichkeit abhängig von der Sample Size n mit einem Wilcoxon Rank Sum Test tatsächlich einen p-value <= 0.05 zu erhalten, wenn ein Unterschied existiert?
+
+- Ziehe 1000 mal ein Sample von 30 je aus wt und ko und teste
+  auf Signifikanz
+- Wie viele der 1000 Versuche sind statistisch signifikant?
+- Wie verändert sich diese Zahl, wenn 10 statt 30 gezogen werden?
+
+```{r}
+# why replace = TRUE?
+test_samle_wilcox <- function(n) {
+  draw_wt <- sample(wt, n, replace = TRUE)
+  draw_ko <- sample(ko, n, replace = TRUE)
+  wilcox.test(draw_wt, draw_ko, exact = FALSE)$p.value
+}
+```
+
+```{r}
+many_p_values <- map_dbl(1:1000, ~test_samle_wilcox(30))
+```
+
+```{r}
+hist(many_p_values)
+```
+
+```{r}
+many_p_values <- map_dbl(1:1000, ~test_samle_wilcox(10))
+```
+
+```{r}
+hist(many_p_values)
+```
+
+```{r}
+many_p_values <- map_dbl(1:1000, ~test_samle_wilcox(4))
+```
+
+```{r}
+hist(many_p_values)
+```
+
+```{r}
+alpha = 0.05
+mean(many_p_values <= alpha)
+```
+
+```{r}
+# talk about power, effect size, difference between wilcox and t-test
+```
+
+
+#### Specificity: Unter der Voraussetzung, dass **kein** Unterschied zwischen den Bedingungen vorliegt, wie groß ist die Wahrscheinlichkeit, dennoch ein statistisch signifikantes Ergebnis zu erhalten?
+
+- Stell dir vor, alle Zellen seien wie wt-Zellen
+- Ziehe zwei mal 30 aus den wt-Zellen und lasse einen
+  Wilcoxon Rank Sum Test laufen
+- Widerhole das das Prozedere 1000 mal
+- Wie oft ist das Ergebnis statistisch signifikant?
+
+```{r}
+test_same_wilcox <- function(n) {
+  draw_wt <- sample(wt, n, replace = TRUE)
+  draw_ko <- sample(wt, n, replace = TRUE)
+  wilcox.test(draw_wt, draw_ko, exact = FALSE)$p.value
+}
+```
+
+```{r}
+many_p_values <- map_dbl(1:1000, ~test_same_wilcox(30))
+```
+
+```{r}
+hist(many_p_values)
+```
+
+```{r}
+alpha = 0.05
+mean(many_p_values <= alpha)
+```
+
+```{r}
+# this is what we would expect from p-values!
+```
+
+
+#### Resource zu p-value Histogrammen
+
+http://varianceexplained.org/statistics/interpreting-pvalue-histogram/
 

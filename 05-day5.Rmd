@@ -1,9 +1,182 @@
-
+---
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
 # Folgt {#day5}
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)
 ```
+
+## Lösung Tag 4
+
+## Korrelation und Regression
+
+https://figshare.com/articles/Storks_and_human_babies_data/839299/1
+
+
+```{r}
+library(tidyverse)
+
+storks <- read_csv("data/05_storks.csv")
+storks
+```
+
+```{r}
+ggplot(storks, aes(Storks, Birth)) +
+  geom_point()
+```
+
+
+```{r}
+ggplot(storks, aes(Storks, Birth)) +
+  geom_point() +
+  scale_x_continuous(trans = "log", breaks = scales::log_breaks()) +
+  scale_y_continuous(trans = "log", breaks = scales::log_breaks())
+```
+
+```{r}
+cor(storks$Storks, storks$Birth)
+```
+
+```{r}
+cor(log(storks$Storks), log(storks$Birth))
+```
+
+
+```{r}
+cor.test(storks$Storks, storks$Birth)
+```
+
+```{r}
+cor(storks$Storks, storks$Birth, method = "spearman")
+```
+
+```{r}
+model <- lm(storks$Birth ~ storks$Storks)
+summary(model)
+```
+
+```{r}
+cor(storks$Storks, storks$Birth)^2
+```
+
+```{r}
+with(storks, {
+  plot(Storks, Birth)
+  abline(lm(Birth~Storks))
+})
+```
+
+```{r}
+with(storks, {
+  plot(log(Storks), log(Birth))
+  abline(lm(log(Birth)~log(Storks)))
+})
+```
+
+
+
+## Log-Transformationen
+
+## Tricks für viele Daten / Dateien
+
+```{r}
+
+```
+
+
+## Non-Linear Regression
+
+```{r}
+Puromycin <- as_tibble(Puromycin)
+Puromycin
+```
+
+```{r}
+puro_treat <- Puromycin %>% 
+  filter(state == "treated")
+```
+
+```{r}
+plot(puro_treat$conc, puro_treat$rate)
+```
+
+```{r}
+ggplot(puro_treat, aes(conc, rate)) + geom_point()
+```
+
+```{r}
+michaelis_menten_fun <- function(conc, Vm, K) {
+  (Vm * conc) / (K + conc)
+}
+```
+
+```{r}
+plot(puro_treat$conc, puro_treat$rate)
+curve(michaelis_menten_fun(conc = x, Vm = 200, K = 0.06),
+      add = TRUE,
+      col = "red",
+      from = 0, to = 1,
+      n = 100)
+```
+
+```{r}
+model <- nls(rate ~ michaelis_menten_fun(conc, Vm, K),
+             start = list(Vm = 200, K = 0.1),
+             data = puro_treat)
+model
+```
+
+```{r}
+coef(model)
+```
+
+```{r}
+Vm_est <- coef(model)[1]
+K_est  <- coef(model)[2]
+```
+
+```{r}
+plot(puro_treat$conc, puro_treat$rate)
+curve(michaelis_menten_fun(x, Vm = Vm_est, K = K_est), add = TRUE, col = "red")
+```
+
+```{r}
+ggplot(puro_treat, aes(conc, rate)) +
+  geom_point() +
+  stat_function(fun = ~michaelis_menten_fun(conc = .x, Vm = Vm_est, K = K_est),
+                col = "red")
+```
+
+
+```{r}
+all_models <- Puromycin %>% 
+  group_nest(state) %>% 
+  mutate(model = map(data, ~nls(rate ~ michaelis_menten_fun(conc, Vm, K),
+                                start = list(Vm = 200, K = 0.1),
+                                data = .x))
+  )
+all_models
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+
+
 
 ```{r,echo=FALSE}
 ## linear regression on RNA decay data:
@@ -103,27 +276,10 @@ knitr::opts_chunk$set(eval = FALSE)
 # CDE in the ORF, a CDE that is not-conserved and a conserved CDE. What would you
 # conclude?
 
-## Homework:
-# Show the admission rate of the 6 departments in UCBAdmissions
-# (y-axis) versus the proportion of female applicants (x-axis) of
-# UCBAdmissions as a scatter plot. Add a regression line.
-# Calculate a correlation coefficient. Standardize the data and show
-# that Pearson‘s correlation coefficient and the slope of the
-# regression line are identical now.
-
-
 
 ```
 
-Sind die folgenden Statements zu P-Values wahr?
 
-1. With a p-value of 0.02, there is a 2% chance that the result occurred due to coincidence.
-2. With a p-value of 0.02, we can be 98% confident that our hypothesis is true.
-3. With a p-value of 0.02, there is a 2% chance that the null hypothesis is true.
-4. With a p-value of 0.02, the result will be reproducible in 98% of the cases.
-5. If we always apply a p-value cut-off of 0.05, we will be wrong in 5% of the cases.
-6. If we always apply a p-value cut-off of 0.05, we will miss 5% of true effects.
-7. If we always apply a p-value cut-off of 5%, we will identify a significant effect in 5% of the cases where there is no effect.
 
 
 
