@@ -1,12 +1,13 @@
 ---
 output: html_document
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
+
 # Statistische Tests und Power {#day4}
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(eval = TRUE)
 ```
 
 ## Lösung für Tag 3
@@ -27,12 +28,13 @@ Der Einfachheit nehmen wir an, dass die 300 Zellen
 komplett repräsentativ für alle WT bzw. KO Zellen sind,
 also die Gesamtpopulation darstellen.
 
-Nun ziehen wir zufällig daraus je 30 Zellen.
+- Nun ziehen wir zufällig daraus je 30 Zellen.
+- Das machen wir nun 1000 mal.
+- Wie sieht nun die Verteilung der Mittelwerte aus?
 
-Wie sieht nun die Verteilung der Mittelwerte aus?
+### Daten einlesen
 
-Das machen wir jetzt 1000 mal.
-
+Zunächst laden wir das Tidyverse und unsere Daten:
 
 ```{r}
 # load tidyverse
@@ -45,35 +47,82 @@ data <- read_csv("data/03_inclusion_bodies.csv")
 attach(data)
 ```
 
-Ctrl + Alt + I
+`attach` macht die Spalten des Datensets (in unserem Fall _ko_ and _wt_)
+global verfügbar. Daher können wir im Folgenden
+`wt` statt `data$wt` oder `data["wt"]` schreiben.
+
+> Verwende `attach` mit Vorsicht! Denn die Reihenfolge der beiden
+> Vektoren ist nun unabhängig voneinander. Operationen,
+> die Du mit den Vektoren `wt` und `ko` ausführst, beeinflussen
+> nicht den jeweils anderen Vektor oder den zugrundeliegenden
+> Data.frame `data`.
+
+### Der einfache Fall
+
+Für den einfachen Fall ziehen wir 30 Punkte aus einem der beiden Vektoren
+und berechnen den Mittelwert.
 
 ```{r}
-# sample n = 30 points from both vectors
+# sample n = 30 points from a vector
 subset <- sample(wt, 30)
 
-# calculate means
+# calculate mean
 mean(subset)
 ```
 
+### Abstraktion für viele Fälle 
+
+Da wir diese Zeilen nicht 1000 mal tippen wollen schreiben wir eine Funktion,
+die genau das tut. Sie nimmt einen Vektor (`x`) und zieht `n` Punkte daraus.
 
 ```{r}
-# put this in a function of n and x
 get_subset_mean <- function(n, x) {
   subset <- sample(x, n)
   mean(subset)
 }
+```
 
-# test the function
+Die Funktion funktioniert:
+
+```{r}
 get_subset_mean(2, wt)
 ```
 
+Mit der `map` Funktion aus dem `purrr`-Package rufen wir diese
+Funktion nun 1000 mal auf uns speichern das Ergebnis in einem
+Vektor, bestehend aus Kommazahlen (daher `map_dbl` für
+map _double_).
 
 ```{r}
-# map this function of 1:N with N = 1000
 N <- 1000
 Ms <- map_dbl(1:N, ~ get_subset_mean(30, wt) )
+```
 
-# show histogram of results for wt and ko
+### Exkurs: Lambda-Funktionen
+
+Das `~`-Symbol (Tilde) erstellt eine sogenannte _lambda_ Funktion, also
+eine Funktion, der wir keinen Namen geben, da wir sie nur einmal
+brauchen. Im Kontext der Familie von `map` Funktionen wird `~`
+übersetzt:
+
+`add_one <- function(x) x + 1`
+Ist equivalent zu
+`~ .x + 1`.
+Hierbei heißt das Argument der Funktion immer `.x`.
+
+Die
+lambda Funktion `~ get_subset_mean(30, wt)` nimmt nacheinander
+die Zahlen in `1:N` als Eingabe, nennt sie `.x`, aber verwendet
+das Argument `.x` überhaubt nicht. In unserem Fall bedeutet das also,
+dass die Funktion `get_subset_mean`
+bloß 1000 mal aufgerufen wird mit den Argumenten `30` und `wt`.
+
+### Pupulationsverteilung vs. Verteilung der Mittelwerte
+
+Mit großem n wird die Verteilung der Mittelwerte symmtrisch,
+obwohl die Populationsverteilung unsymmtrisch ist.
+
+```{r}
 hist(Ms)
 ```
 
@@ -81,12 +130,8 @@ hist(Ms)
 hist(wt)
 ```
 
-Mit großem n wird die Verteilung der Mittelwerte symmtrisch,
-obwohl die Populationsverteilung unsymmtrisch ist.
-
 Nach dem Central Limit Theorem folgen die Mittelwerte
-einer Normalverteilung.
-
+einer Normalverteilung. Dies lässt sich zeigen:
 
 ```{r}
 # show qqnorm of Ms
@@ -94,13 +139,31 @@ qqnorm(Ms)
 qqline(Ms, col = "red")
 ```
 
-```{r}
-# Explain quantiles again, but better this time
-# using curve for dnorm, pnorm, qnorm
+### Exkurs: Quantiles
+
+Am Beispiel einer Normalverteilung zeigt
+`dnorm` die Wahrscheinlichkeitsdichteverteilung
+(Im Englischen _Probability Density Function, PDF_).
+
+```{r dnorm1, fig.cap="Die Wahrscheinlichkeit, einen Wert zwischen z.B. -1 und 1 zu ziehen, entspricht dem Integral der Funktion in diesem Bereich."}
 curve(dnorm, -3, 3)
+```
+
+Wenn wir nun das Integral von $-\infty$ bis $x$ berechnen erhalten wir
+die kummulative Wahrscheinlichkeitsfunktion `pnorm`.
+
+```{r pnorm1, fig.cap="pnorm von x ist also die Wahrscheinlichkeit, einen Wert kleiner oder gleich x aus dnorm zu ziehen."}
 curve(pnorm, -3, 3)
+```
+
+`qnomr`, die Quantil-Funktion,
+ist nun die Inverse dieser Funkion, hat also die Achsen vertautscht.
+
+```{r}
 curve(qnorm, 0, 1)
 ```
+
+## Die T-Verteilung
 
 Der zentrale Grenzwertsatz gilt erst bei großen _sample sizes_.
 Darunter ist die Verteilung der Mittelwerte an den Rändern
@@ -110,24 +173,38 @@ Daher verwenden wir (sicherheitshalber) für
 die meisten Daten und statistischen Tests die T-Verteilung,
 nicht die Normalverteilung.
 
-```{r}
-curve(dnorm, -3, 3)
-tdist <- function(x) dt(x, df = 29)
+Für 3 Freiheitsgrade:
 
+```{r tdist, fig.cap="T-Verteilung in Rot"}
+curve(dnorm, -3, 3)
+tdist <- function(x) dt(x, df = 3)
 curve(tdist, -3, 3, add = TRUE, col = "red")
 ```
+
+Für 30 Freiheitsgrade
+
+```{r}
+curve(dnorm, -3, 3)
+tdist <- function(x) dt(x, df = 30)
+curve(tdist, -3, 3, add = TRUE, col = "red")
+```
+
+### Konfidenz Intervalle (CI)
 
 Gleichermaßen können wir mit der t-Verteilung
 95% Konfidenz Intervalle berechnen.
 
-```{r}
+Das 95% Konfidenz Intervall eines Sample-Mittelwerts
+umschließt den wahren Mittelwert (den Mittelwert der Gesamtpopulation)
+in 95% der Fälle (wenn Du das Experiment unendlich oft wiederholen würdest).
+
+```{r ci-vis, fig.cap="Wahrer Mittelwert in Rot"}
 # show hist of Ms
 hist(Ms)
 
 # add line for true mean of wt
 abline(v = mean(wt), col = "red", lwd = 3)
 ```
-
 
 ```{r}
 # use t.test for conf.int
@@ -136,21 +213,34 @@ mean(subset)
 
 lims <- t.test(subset)$conf.int
 
-hist(subset)
+hist(subset, breaks = 20)
 abline(v = lims[1], col = "red")
 abline(v = lims[2], col = "red")
 ```
 
-
 ## Signifikanztests
+
+Signifikanztests beantworten die Frage:
+
+> Unter der Annahme, dass es zwischen zwei (oder mehr)
+> Gruppen keinen Unterschied gibt (also sie aus der gleichen
+> Verteilung stammen), wie wahrscheinlich ist es dann,
+> einen so großen, oder größeren, Unterschied, wie beobachtet,
+> zu finden? 
 
 ### Students T-Test
 
-```{r}
-# perform t.test of wt and ko
-hist(wt)
-hist(ko)
+Für normalverteilte Daten verwenden wir den Students T-Test.
 
+```{r, echo = FALSE}
+data %>% 
+  pivot_longer(1:2) %>% 
+  ggplot(aes(value, fill = name)) +
+  geom_histogram(position = "identity") +
+  theme(legend.position = "bottom")
+```
+
+```{r}
 t.test(wt, ko)
 ```
 
@@ -160,87 +250,96 @@ subset_ko <- sample(ko, 3)
 t.test(subset_wt, subset_ko)
 ```
 
-
 ### Wilcoxon Rank Sum Test
 
-- Parametrische vs. Nicht-parametrisch Tests
+Sind unsere Daten nicht normalverteilt,
+wie es hier der Fall ist, ist ein sogenannter
+nicht-parametrischer Test angebracht. Diese Tests
+machen nicht die Annahme der Normalität.
+
+Der Wilcoxon Rank Sum Test (Auch Mann-Whitney U Test genannt)
+wandelt die eigentlichen Werte der Datenpunkte zunächst
+in Ränge um. Also:
+
+> "Der wievieltniedrigste Punkt ist es?"
+
+Beispiel:
 
 ```{r}
-data %>%
-  pivot_longer(c(1,2)) %>% 
-  ggplot(aes(name, value)) +
-  geom_jitter()
-```
-
-
-```{r}
-# perform wilcox.test
-subset_wt <- sample(wt, 3)
-subset_ko <- sample(ko, 3)
-wilcox.test(subset_wt, subset_ko)
-```
-
-```{r}
-x <- c(1,2,20, 1239132, 3, 5)
+x <- c(1, 2, 20, 1239132, 3, 5)
 rank(x)
 ```
 
+Und an unseren Daten:
 
-### Type I und Type II Errors
-
-- Type I:  False Positive (rejection of a true null hypothesis)
-- Type II: False Negative (non-rejection of false null hypothesis)
-
-
-```{r}
-# define 2 dnorm functions with different means
-norm1 <- function(x) dnorm(x, 0, 1)
-norm2 <- function(x) dnorm(x, 0, 1)
-
-# plot curves for both
-curve(norm1, -3 , 3)
-curve(norm2, add = TRUE, col = "red", -3, 3)
-
-
+```{r, echo = FALSE}
+data %>%
+  pivot_longer(c(1,2)) %>% 
+  ggplot(aes(name, value)) +
+  geom_jitter() +
+  labs(x = "")
 ```
 
+```{r}
+wilcox.test(wt, ko)
+```
 
-Demonstrate Type I errors
+## Type I und Type II Errors
 
-#### Type I:  False Positive
+- Type I:  False Positives (rejection of a true null hypothesis)
+- Type II: False Negatives (non-rejection of false null hypothesis)
+
+### Type I: False Positives
+
+Ein Typ I Fehler würde bedeuten, dass wir sagen, ein Unterschied
+zwischen den Gruppen exisitiere,
+obwohl alle Werte aus der gleichen Verteilung stammen und daher kein
+Unterschied besteht.
+
+Bei einem P-Value von $\leq$ 0.05 (= 5\ %) wird typischerweise
+gesagt, dass ein "statistisch siginifakter" Unterschied besteht.
+Mit diesem tpyischen Cutoff von 0.05 akzeptieren
+wir also, allein durch unsere Definition, bereits (mindestens)
+5\ % falsch Positive.
+
+Dieser Cutoff, das Signifikanzlevel, wird auch $\alpha$ genannt.
+
+$$\alpha=\text{Type I error rate}$$
+
+```{r}
+curve(dnorm, -3 , 3)
+```
 
 ```{r}
 # define n
 n <- 3
 
 # draw twice from the same normal distributions
-draw1 <- rnorm(n, 0, 1)
-draw2 <- rnorm(n, 0, 1)
-
-# convert to tibble, pivot_longer, plot points
-tibble(draw1, draw2) %>% 
-  pivot_longer(c(1,2)) %>% 
-  ggplot(aes(name, value)) +
-  geom_jitter()
+draw1 <- rnorm(n)
+draw2 <- rnorm(n)
 
 # do the t.test
 t.test(draw1, draw2)
 
 # do the rank sum test
 wilcox.test(draw1,  draw2)
-
-# show with different n
 ```
+ 
+Teste diesen Code mit unterschiedlichen Werten für `n`.
 
-#### Type II errors
+### Type II errors
 
-Demonstrate Type II errors
+Wenn zwischen zwei Gruppen ein tatsächlicher Unterschied besteht,
+wir aber bei unserem Test ein nicht signifikantes Ergebnis erhalten,
+begehen wir einen Fehler vom Typ II.
+
+Ein Typ II Fehler ist also ein falsch negatives Ergebnis.
 
 $$\beta=\text{Type II error rate}$$
 
 ```{r}
 # define n
-n <- 3
+n <- 15
 
 # draw from different normal distributions
 draw1 <- rnorm(n, 0, 1)
@@ -249,8 +348,10 @@ draw2 <- rnorm(n, 1, 1)
 # convert to tibble, pivot_longer, plot points
 tibble(draw1, draw2) %>% 
   pivot_longer(c(1,2)) %>% 
-  ggplot(aes(name, value)) +
-  geom_jitter()
+  ggplot(aes(name, value, group = 1)) +
+  geom_jitter(width = 0.2) +
+  stat_summary(geom = "line", fun.y = mean, lwd = 1, lty = 2) +
+  stat_summary(geom = "point", fun.y = mean, color = "red", size = 2)
 
 # do the t.test
 t.test(draw1, draw2)
@@ -262,13 +363,23 @@ wilcox.test(draw1,  draw2)
 
 ### Statistical Power
 
+Als statistische Power bezeichnen wir die Wahrscheinlichkeit eines Tests, einenen wahren Unterschied
+zwischen Gruppen bei dem gewählten $\alpha$ auch tatsächlich als statistisch signifikant zu kennzeichnen
+und damit ein wahr positives Ergebnis zu produzieren.
+
 $$Power = 1-\beta$$
+
+Für den T-Test können wir in R die folgende Funktion verwenden, die uns hier beispielsweise
+die Frage beantwortet: "Wie viele Proben muss ich pro Gruppe (mindestens) nehmen,
+um einen erwarteten Unterschied der Mittelwerte von 1 mit einer Standardabweichung von 1
+in 80% der Fälle auch tasächlich als solchen zu erkennen?"
 
 ```{r}
 # show power.t.test
 power.t.test(delta = 1, sd = 1, power = 0.8)
 ```
 
+## Probleme
 
 ### The Jelly Bean Problem (Multiple Testing)
 
@@ -298,7 +409,6 @@ Jeder P-Value wird mutipliziert mit der Zahl der Tests
 p.adjust(c(0.05, 0.0001, 0.003323, 0.7), method = "BH")
 ```
 
-
 ### The Base Rate Fallacy
 
 Beispiel: Mammogramm
@@ -319,9 +429,8 @@ p_positive <- true_positives / (true_positives + false_positives)
 p_positive
 ```
 
-**Folgendes muss nicht mitgeschrieben werden!**
 
-```{r}
+```{r, echo = FALSE}
 theme_set(theme_void())
 
 data.frame(
@@ -334,7 +443,7 @@ data.frame(
   scale_fill_manual(values = c("white", "red"))
 ```
 
-```{r}
+```{r, echo = FALSE}
 data.frame(
   parts = c("detected positives", "not detected positives (false negatives)", "negatives"),
   vals = c(true_positives, positives - true_positives, negatives)
@@ -345,7 +454,7 @@ ggplot(aes(fill = parts, values = vals)) +
   scale_fill_manual(values = c("darkred", "white", "red"))
 ```
 
-```{r}
+```{r, echo = FALSE}
 data.frame(
   parts = c("detected positives",
             "not detected positives (false negatives)",
@@ -361,7 +470,6 @@ data.frame(
   coord_equal() +
   scale_fill_manual(values = c("darkred", "palevioletred1", "red", "white"))
 ```
-
 
 ### Resourcen 
 
@@ -384,6 +492,8 @@ data.frame(
   und die SD ausgibt
 - Füttere die Zahlen von 1 bis 100 in die Funktion
   (mit map_dbl) und plotte das Ergebnis
+
+#### Lösung
     
 ```{r}
 library(tidyverse)
@@ -409,7 +519,7 @@ get_sample_mean(wt, 10)
 
 ```{r}
 N <- 1000
-many_means <- map_dbl(1:N, ~get_sample_mean(wt, 10))
+many_means <- map_dbl(1:N, ~ get_sample_mean(wt, 10) )
 sd(many_means)
 ```
 
@@ -442,7 +552,6 @@ curve(sd(wt)/sqrt(x), add = TRUE, col = "red")
 # talk about difference between sample sd and population sd
 ```
 
-
 #### Ein 95% Konfidenzinterval eines Samples enthält den Populationsmittelwert mit einer Wahrscheinlichkeit von 95%.
 
 - Ziehe 30 Zellen aus dem wt (oder ko) Vektor
@@ -453,6 +562,8 @@ curve(sd(wt)/sqrt(x), add = TRUE, col = "red")
   wahren Mittelwert einschließt
 - Wende sie auf die 1000 Sets der Limits an
 - Wie oft (prozentual) erhältst du TRUE?
+
+#### Lösung
 
 ```{r}
 draw <- sample(wt, 30)
@@ -540,6 +651,7 @@ mean(results)
 
 ```{r}
 # talk about organisation of code
+# source("test.R")
 ```
 
 #### Weitere Hinweise
@@ -582,8 +694,9 @@ map2_dbl(x,y, `+`)
 - Wie viele der 1000 Versuche sind statistisch signifikant?
 - Wie verändert sich diese Zahl, wenn 10 statt 30 gezogen werden?
 
+#### Lösung
+
 ```{r}
-# why replace = TRUE?
 test_samle_wilcox <- function(n) {
   draw_wt <- sample(wt, n, replace = TRUE)
   draw_ko <- sample(ko, n, replace = TRUE)
@@ -632,6 +745,8 @@ mean(many_p_values <= alpha)
   Wilcoxon Rank Sum Test laufen
 - Widerhole das das Prozedere 1000 mal
 - Wie oft ist das Ergebnis statistisch signifikant?
+
+#### Lösung
 
 ```{r}
 test_same_wilcox <- function(n) {

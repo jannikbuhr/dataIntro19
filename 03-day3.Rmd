@@ -474,7 +474,6 @@ zu können.
     - Nutze `geom_col`, **nicht** `geom_bar`
   - BONUS: Mach die Plots hübsch! (e.g. colors, title,
     caption)
-- (Nächste Woche: Gibt es einen statistisch signifikanten Unterschied zwischen den Gruppen?)
 
 ### Lösung
 

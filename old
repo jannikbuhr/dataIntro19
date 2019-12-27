@@ -1,0 +1,42 @@
+
+
+## Wiederholung Statistik
+
+### Sind die folgenden Statements zu P-Values jeweils wahr?
+
+1. With a p-value of 0.02, there is a 2% chance that the result occurred due to coincidence.
+2. With a p-value of 0.02, we can be 98% confident that our hypothesis is true.
+3. With a p-value of 0.02, there is a 2% chance that the null hypothesis is true.
+4. With a p-value of 0.02, the result will be reproducible in 98% of the cases.
+5. If we always apply a p-value cut-off of 0.05, we will be wrong in 5% of the cases.
+6. If we always apply a p-value cut-off of 0.05, we will miss 5% of true effects.
+7. If we always apply a p-value cut-off of 5%, we will identify a significant effect in 5% of the cases where there is no effect.
+
+### The jelly bean problem
+
+How do p-values behave if there is NO difference
+("under the null hypothesis"):
+
+How often do we commit a type I error
+(= claiming that there is a difference
+although there is none)?
+
+What is the specificity
+(= the probability to realize that there is
+no difference if there is none)?
+
+# How do p-values behave if there is a real difference?
+
+How often do we commit a type II error
+(= claiming that there is NO difference
+although there is one)?
+
+What is the sensitivity
+(= the probability to detect the
+difference, also called "power")?
+
+Power analysis: How likely is it to miss
+a true effect?
+
+With Power analysis, I can estimate a sample size
+BEFORE performing the experiment!

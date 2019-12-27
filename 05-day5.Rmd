@@ -1,9 +1,4 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: inline
----
-# Folgt {#day5}
+# Korrelation und Regression {#day5}
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)
@@ -11,13 +6,17 @@ knitr::opts_chunk$set(eval = FALSE)
 
 ## Lösung Tag 4
 
+siehe Tag 4.
+
 ## Korrelation und Regression
 
-https://figshare.com/articles/Storks_and_human_babies_data/839299/1
+https://figshare.com/articles/Storks_and_human_babies_data/839299/1 oder
+https://github.com/jannikbuhr/dataIntro19/tree/master/data
 
 
 ```{r}
 library(tidyverse)
+library(broom)
 
 storks <- read_csv("data/05_storks.csv")
 storks
@@ -28,22 +27,58 @@ ggplot(storks, aes(Storks, Birth)) +
   geom_point()
 ```
 
+```{r}
+# explain log transform and relevance in biology
+```
 
 ```{r}
 ggplot(storks, aes(Storks, Birth)) +
   geom_point() +
-  scale_x_continuous(trans = "log", breaks = scales::log_breaks()) +
-  scale_y_continuous(trans = "log", breaks = scales::log_breaks())
+  scale_x_continuous(trans = "log10") +
+  scale_y_continuous(trans = "log10") +
+  annotation_logticks() +
+  theme_classic()
+```
+
+
+```{r}
+model <- lm(Birth ~ Storks, data = storks)
+model
+summary(model)
 ```
 
 ```{r}
+ggplot(storks, aes(Storks, Birth)) +
+  geom_point() +
+  scale_x_continuous(trans = "log10", breaks = scales::log_breaks()) +
+  scale_y_continuous(trans = "log10", breaks = scales::log_breaks()) +
+  annotation_logticks() +
+  theme_classic() +
+  geom_smooth(method = "lm")
+```
+
+
+```{r}
+model <- lm(log(Birth) ~ log(Storks), data = storks)
+model
+```
+
+```{r}
+summary(model)
+```
+
+e^2 * e^2 = e^(2)
+
+
+```{r}
+# explain correlation
+# explain range of correlation coefficient
 cor(storks$Storks, storks$Birth)
 ```
 
 ```{r}
 cor(log(storks$Storks), log(storks$Birth))
 ```
-
 
 ```{r}
 cor.test(storks$Storks, storks$Birth)
@@ -76,22 +111,30 @@ with(storks, {
 })
 ```
 
+```{r}
+# show xkcd
+# talk about confounding factors / variables
+storks
+```
 
-
-## Log-Transformationen
 
 ## Tricks für viele Daten / Dateien
 
 ```{r}
-
+paths <- dir("data", full.names = TRUE, pattern = ".csv")
+map(paths, read_csv)
+# map_dfr
 ```
-
 
 ## Non-Linear Regression
 
 ```{r}
 Puromycin <- as_tibble(Puromycin)
 Puromycin
+```
+
+```{r}
+Puromycin %>% count(state)
 ```
 
 ```{r}
@@ -114,8 +157,15 @@ michaelis_menten_fun <- function(conc, Vm, K) {
 ```
 
 ```{r}
+x = seq(0, 1, by = 0.001)
+y = michaelis_menten_fun(x, Vm = 200, K = 0.2)
+plot(x, y)
+```
+
+
+```{r}
 plot(puro_treat$conc, puro_treat$rate)
-curve(michaelis_menten_fun(conc = x, Vm = 200, K = 0.06),
+curve(michaelis_menten_fun(conc = x, Vm = 200, K = 0.1),
       add = TRUE,
       col = "red",
       from = 0, to = 1,
@@ -125,7 +175,7 @@ curve(michaelis_menten_fun(conc = x, Vm = 200, K = 0.06),
 ```{r}
 model <- nls(rate ~ michaelis_menten_fun(conc, Vm, K),
              start = list(Vm = 200, K = 0.1),
-             data = puro_treat)
+             data  = puro_treat)
 model
 ```
 
@@ -134,151 +184,158 @@ coef(model)
 ```
 
 ```{r}
+summary(model)$coefficients
+```
+
+
+```{r}
 Vm_est <- coef(model)[1]
 K_est  <- coef(model)[2]
 ```
 
 ```{r}
 plot(puro_treat$conc, puro_treat$rate)
-curve(michaelis_menten_fun(x, Vm = Vm_est, K = K_est), add = TRUE, col = "red")
+curve(michaelis_menten_fun(x, Vm = Vm_est, K = K_est),
+      add = TRUE,
+      col = "red")
 ```
 
 ```{r}
 ggplot(puro_treat, aes(conc, rate)) +
   geom_point() +
-  stat_function(fun = ~michaelis_menten_fun(conc = .x, Vm = Vm_est, K = K_est),
-                col = "red")
+  stat_function(fun = ~ michaelis_menten_fun(conc = .x, Vm = Vm_est, K = K_est),
+                col = "red") +
+  theme_classic()
+```
+
+```{r}
+model2 <- nls(rate ~ SSmicmen(conc, Vm, K),
+             data  = puro_treat)
+model2
+```
+
+```{r}
+predict(model2, newdata = list(conc = 1:10))
+```
+
+
+
+```{r}
+nested_data <- Puromycin %>% 
+  group_nest(state)
+nested_data
+```
+
+```{r}
+nested_data$data[[1]]
 ```
 
 
 ```{r}
-all_models <- Puromycin %>% 
-  group_nest(state) %>% 
-  mutate(model = map(data, ~nls(rate ~ michaelis_menten_fun(conc, Vm, K),
+all_models <- nested_data %>% 
+  mutate(model = map(data, ~ nls(rate ~ michaelis_menten_fun(conc, Vm, K),
                                 start = list(Vm = 200, K = 0.1),
                                 data = .x))
   )
+
 all_models
 ```
 
 ```{r}
-
-
+fit_my_model <- function(df) {
+  nls(rate ~ michaelis_menten_fun(conc, Vm, K),
+                                start = list(Vm = 200, K = 0.1),
+                                data = df)
+}
 ```
 
 ```{r}
+fit_my_model(puro_treat)
+```
 
+
+```{r}
+all_models <- nested_data %>% 
+  mutate(model = map(data, fit_my_model)
+  )
+
+all_models
 ```
 
 ```{r}
-
+all_models$model[[1]]
 ```
 
 
+```{r}
+all_models <- all_models %>% 
+  mutate(fitted = map(model, augment),
+         coef   = map(model, coef))
 
-
-
-```{r,echo=FALSE}
-## linear regression on RNA decay data:
-# RNA levels decrease after transcription was shut down with Actinomycin D:
-
-# As a scatter plot:
-
-# lm() produces a "linear model":
-
-
-# from the model, we get the intercept and the slope of the regression line.
-# The first coefficient is the intercept, the second the slope:
-
-
-## correlation coefficients of IP data:
-# How good is the correlation between biological replicates? 
-# (= How reproducible was the experiment?)
-
-
-# Should we log-transform the data?
-
-
-# Get Pearson's R:
-
-
-# How is the correlation between conditions compared to the correlation between 
-# replicates? (= How much information is in the data?)
-
-
-# adding points to a scatter plot
-
-
-## Relationship between regression and correlation:
-# R squared is symmetrical and the same as the square of Pearson`s R 
-
-# If both standard deviations are identical, the slope of the regression line
-# is the same as Pearson's R.
-# We standardize the data by subtracting the mean and dividing by the standard deviation:
-
-# Now, Pearson's R and the slope of the regression are identical:
-
-# lm() is now symmetric:
-
-
-## Testing correlation coefficients:
-# How do we calculate a p-value for correlation coefficients?
-# Let's simulate the behaviour of Pearson's R if there is NO CORRELATION:
-
-
-# We break the relationship between a and b by shuffling the values randomly:
-
-# Are correlation coefficients always normally distributed, or is there a connection to sample size?
-# Let's decrease sample size (n):
-
-# Pearson's R follows something like a t-distribution, 
-# after this transformation:
-
-
-## Exercises:
-# 1a. Open example6.csv and plot y against x.
-
-# b. Add a regression line and calculate Pearson‘s
-# correlation coefficient.
-
-# c. Compare to the Spearman correlation coefficient.
-
-# d. Remove the last data point of x and y. How does this
-# change the result of a - c?
-
-# 2. File example7.csv contains the number of stork pairs and the
-# birth rate (x 10^3 / year) of 17 countries in 1990. (Source: Teaching Statistics, Volume 22 ).
-# 2a. Produce a scatter plot and add a regression line. 
-# 2b. Calculate Pearson`s correlation coefficient and Spearman`s correlation coefficient 
-# for the data as they are and after log-transformation. 
-# How does the log-transformation affect the
-# correlation coefficients?
-# 2c. Perform a permutation test on Pearson's R of the data 
-# (without log-transformation).
-
-
-# 3. The file example8.csv contains transcriptome-wide mRNA half life measurements and
-# four different properties of the mRNAs: Information about the AREScore, 5‘UTR, ORF
-# and 3‘UTR length.
-# Which of these properties has a significant correlation with half life?
-
-# a. Plot the different mRNA properties against mRNA half-lives. Calculate the respective
-# correlation coefficients. When would you choose Pearson`s and when would you choose
-# Spearman`s method? When would you log-transform the data? Check for normal or log-
-#  normal distribution!
-
-# b. Plot the half life against the property that shows the best correlation with half-life and
-# add a regression line to your plot.
-
-# c. Two weeks ago, you were able to show a significant positive association between
-# AREScore and conserved as well as not-conserved CDEs. Correlate AREScore and 3‘UTR
-# length. In addition, make a boxplot showing the 3‘UTR lengths of genes with no CDE, a
-# CDE in the ORF, a CDE that is not-conserved and a conserved CDE. What would you
-# conclude?
-
-
+all_models
 ```
 
+```{r}
+all_models %>% 
+  unnest_wider(coef)
+```
+
+```{r}
+all_models %>% 
+  select(state, fitted) %>% 
+  unnest(fitted)
+```
+
+```{r}
+all_models %>% 
+  select(state, fitted) %>% 
+  unnest(fitted) %>% 
+  ggplot(aes(conc, rate, color = state)) +
+  geom_point() +
+  geom_line(aes(y = .fitted))
+```
+
+```{r}
+make_data <- function(model, from, to, n) {
+  conc    = seq(from, to, length.out = n)
+  .fitted = predict(model, newdata = list(conc = conc))
+  tibble(conc, .fitted)
+}
+
+new_data <- all_models %>% 
+  mutate(new_data = map(model, make_data, 0, 1, 100)) %>% 
+  select(state, new_data) %>% 
+  unnest(new_data)
+```
+
+```{r}
+all_models %>% 
+  select(state, fitted) %>% 
+  unnest(fitted) %>% 
+  ggplot(aes(conc, rate, color = state)) +
+  geom_point() +
+  geom_line(data = new_data, aes(y = .fitted))
+```
+
+
+## Übung
+
+### Mit den Datasaurus Dozen Datensets
+
+```{r}
+datasauRus::datasaurus_dozen
+```
+
+- Visualisiere alle Sets gemeinsam in einem ggplot Scatterplot,
+  nutze dazu `facet_wrap`.
+- Füge mittels `geom_smooth` lineare Trendlinien hinzu
+
+
+- Fitte eine Lineare Regression and jedes der Datensets. Nutze dazu die
+  Techniken aus
+  [R4DataScience: Many Models](https://r4ds.had.co.nz/many-models.html)
+  und das `broom` package.
+- Analysiere die Fits.
 
 
 
