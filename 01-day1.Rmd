@@ -24,7 +24,7 @@ wenn unweigerlich etwas nicht funktioniert! Das ist völlig normal.
 Selbst erfahrene Programmierer stolpern regelmäßig über
 fehlende Kommata oder Klammern.
 
-```{r googling, echo=FALSE, fig.cap="The most important programming advice."}****
+```{r googling, echo=FALSE, fig.cap="The most important programming advice."}
 knitr::include_graphics("img/errors.jpg")
 ```
 
@@ -33,7 +33,7 @@ knitr::include_graphics("img/errors.jpg")
 ```{r}
 # Kommentare starten mit dem #-Symbol.
 # Diese Zeilen tun also nichts.
-# Aber erinnern dein zukünftiges Ich daran, was du eigentlich vor hattest
+# Aber erinnern Dein zukünftiges Ich daran, was du eigentlich vor hattest
 ```
 
 Zahlen in R können als ganze Zahlen (_integer_),
