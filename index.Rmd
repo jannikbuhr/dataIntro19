@@ -34,7 +34,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 Der Kurs wird zwar auf Deutsch stattfinden, aber ich kann nicht garantieren, dass
 nicht einige Konzepte in diesem Buch dennoch auf Englisch erklärt werden,
 da die verwendeten Fachbegriffe es ohnehin schon bereits sind. Eine Übersetzung würde
-daher nur mehr Verwirrung stiften. Zudem findet sich auf Englisch die meiste Lektüre und das Googlen von Fehlermeldungen wird erheblich erleichtert, da mehr Leute im
+daher nur mehr Verwirrung stiften. Zudem findet sich auf Englisch die meiste Lektüre und das Googeln von Fehlermeldungen wird erheblich erleichtert, da mehr Leute im
 Internet auf Englisch unterwegs sind als auf Deutsch.
 
 Hier findet ihr Links zu R und RStudio, damit ihr
@@ -51,7 +51,7 @@ euch bitten, euch unter folgendem Link bei _RStudio Cloud_ anzumelden.
 Dabei handelt es sich um eine Version von RStudio, die auf einem Server läuft
 und von euch über jeden beliebigen Browser aufgerufen werden kann. Auf diese
 Weise sind wir nicht von der IT-Abteilung des ZMBHs abhängig, die neuste Version
-von R und RSTudio zu installieren. Zusätzlich könnt ihr auch von zu Hause auf
+von R und RStudio zu installieren. Zusätzlich könnt ihr auch von zu Hause auf
 eure Dateien zugreifen.
 
 - [RStudio Cloud](https://rstudio.cloud/)
@@ -85,7 +85,7 @@ Bei Installationsschwierigkeiten meldet euch möglichst bereits vor Kursbeginn.
     - Die Community
     - StackOverflow, GitHub, R4DS, Slack, Advanced R
 - Arten von Daten
-  - Daten in der Wildniss
+  - Daten in der Wildnis
   - Data in R
     - Vector, matrix, array, list, data.frame (tibble)
   - Data formats, Getting data into R
@@ -103,30 +103,20 @@ Bei Installationsschwierigkeiten meldet euch möglichst bereits vor Kursbeginn.
   - Funktionen schreiben
   - FP vs. OOP
   - Pure functions und Functional Programming
-- Beispieldatensätze
-  - starwars: import, mutate, plot
-  - UCBAdmissions: barplots
-  - Diamonds: distributions, scatterplots, covariance
-  - mpg: boxplot
-  - flights
-  - gapminder
-  - Large dataset: catalytic activity of proteins
 - Statistik
   - Basics: sd, var, mean, median, correlation
   - Histogramme, Verteilungen
   - p-values
     - t.test, Wilcoxon rank sum test, quisquared (ANOVA)
 - Modelling and data fitting
-  - linear regression
-    - Fitting
-    - MASS::rlm
+  - Lineare Regression
   - Analyse
     - modelr, broom
-    - R^2, rmse, residuals, plots,
+    - $R^2$, rmse, residuals, plots,
   - non-linear regression
 - Many models
   - nested datframes, list colums
-  - map
+  - map Funktionen
 
 Diese Inhaltsangabe ist thematisch, nicht chronologisch sortiert
 und erhebt keinen Anspruch auf Vollständigkeit. Alle Angaben ohne Gewähr.

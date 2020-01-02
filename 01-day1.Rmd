@@ -24,7 +24,7 @@ wenn unweigerlich etwas nicht funktioniert! Das ist völlig normal.
 Selbst erfahrene Programmierer stolpern regelmäßig über
 fehlende Kommata oder Klammern.
 
-```{r googling, echo=FALSE, fig.cap="The most important programming advice."}
+```{r googling, echo=FALSE, fig.cap="The most important programming advice."}****
 knitr::include_graphics("img/errors.jpg")
 ```
 
@@ -57,7 +57,7 @@ sowie kategorische Daten (_factor_), `NULL` und Not Assigned (`NA`).
 TRUE | FALSE
 # factor
 # The factor class is for categorical data
-# Factors can be ordered (like childrens' grade levels) or unordered (like gender)
+# Factors can be ordered (like grade levels) or unordered (like gender)
 factor(c("f", "m", "m", NA, "f", "nb"))
 # NULL
 NULL
@@ -235,7 +235,7 @@ meine_liste[2]
 meine_liste[[2]]
 # Listen und Vektoren können Namen haben
 names(meine_liste) <- c("zahl", "hund", "vector")
-# Die Namen identifizeren die Elemente und $ gibt das entsprechende Element zurück
+# Die Namen identifizieren die Elemente und $ gibt das entsprechende Element zurück
 meine_liste$zahl
 meine_liste$vector
 ```
@@ -316,7 +316,7 @@ plot(x = x, y = y, main = "Linear Fit")
 abline(model , col = 'red' )
 ```
 
-Curven von Funktionen
+Kurven von Funktionen
 
 ```{r}
 curve(sin, from = -5, to = 5)
@@ -368,7 +368,7 @@ legend(1, 1,
 ```
 
 Speichere deinen Plot indem du zunächst
-ein Graphc-Device öffnest (`png` in diesem Beispiel),
+ein Graphic-Device öffnest (`png` in diesem Beispiel),
 dann den Plot erstellst und zum Schluss das Graphic-Device wieder
 ausschaltest um das "Drucken" abzuschließen.
 

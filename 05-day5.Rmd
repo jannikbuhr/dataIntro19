@@ -67,9 +67,6 @@ model
 summary(model)
 ```
 
-e^2 * e^2 = e^(2)
-
-
 ```{r}
 # explain correlation
 # explain range of correlation coefficient
@@ -116,7 +113,6 @@ with(storks, {
 # talk about confounding factors / variables
 storks
 ```
-
 
 ## Tricks für viele Daten / Dateien
 

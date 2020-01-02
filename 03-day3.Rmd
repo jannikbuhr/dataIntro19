@@ -20,7 +20,7 @@ starwars %>%
 - Was ist der Unterschied zwischen
   _binomialverteilten_ und _hypergeometrisch verteilten_ Daten?
 
-Zunächst laden wir das tidyvers,
+Zunächst laden wir das tidyverse,
 da wir einige Funktionen und auch Beispieldaten daraus verwenden:
 
 ```{r}
@@ -142,7 +142,7 @@ anscombe
 Anscombes Quartett ist besonders da:
 
 Gleicher Mittelwert, gleiche Standardabweichung
-und der gleiche Correlationscoeffizient,
+und der gleiche Korrelationskoeffizient,
 obwohl die einzelnen Datensets (1 bis 4) sehr unterschiedlich aussehen.
 
 ```{r}
@@ -260,12 +260,7 @@ normalized_data %>%
 
 ```
 
-
-
 Aber was ist noch gleich eine Standardabweichung?
-
-
-
 
 ```{r}
 # explain mean, SD, SEM based on random numbers from normal distribution
@@ -340,7 +335,6 @@ dinos <- datasauRus::box_plots
 ```{r}
 dinos <- read_csv("data/datasaurus.csv")
 ```
-
 
 ```{r}
 tidy_dinos <- dinos %>% 
@@ -429,7 +423,6 @@ tidy_dinos %>%
 
 ```
 
-
 ## Übung
 
 ### Inclusion Bodies
@@ -448,7 +441,7 @@ gleich gespeichert.
 _Disclaimer_: Die Daten stammen aus dem letztjährigen Kurs
 und sind echte Daten,
 aber ich lüge euch bei der Bedeutung ein
-ganz klein wenig an um den biologischen Hintergund
+ganz klein wenig an um den biologischen Hintergrund
 schneller erklären und sie ohne Probleme veröffentlichen
 zu können.
 

@@ -117,10 +117,10 @@ das Argument `.x` überhaubt nicht. In unserem Fall bedeutet das also,
 dass die Funktion `get_subset_mean`
 bloß 1000 mal aufgerufen wird mit den Argumenten `30` und `wt`.
 
-### Pupulationsverteilung vs. Verteilung der Mittelwerte
+### Populationsverteilung vs. Verteilung der Mittelwerte
 
-Mit großem n wird die Verteilung der Mittelwerte symmtrisch,
-obwohl die Populationsverteilung unsymmtrisch ist.
+Mit großem n wird die Verteilung der Mittelwerte symmetrisch,
+obwohl die Populationsverteilung unsymmetrisch ist.
 
 ```{r}
 hist(Ms)
@@ -150,14 +150,14 @@ curve(dnorm, -3, 3)
 ```
 
 Wenn wir nun das Integral von $-\infty$ bis $x$ berechnen erhalten wir
-die kummulative Wahrscheinlichkeitsfunktion `pnorm`.
+die kumulative Wahrscheinlichkeitsfunktion `pnorm`.
 
 ```{r pnorm1, fig.cap="pnorm von x ist also die Wahrscheinlichkeit, einen Wert kleiner oder gleich x aus dnorm zu ziehen."}
 curve(pnorm, -3, 3)
 ```
 
 `qnomr`, die Quantil-Funktion,
-ist nun die Inverse dieser Funkion, hat also die Achsen vertautscht.
+ist nun die Inverse dieser Funkion, hat also die Achsen vertauscht.
 
 ```{r}
 curve(qnorm, 0, 1)
@@ -192,9 +192,9 @@ curve(tdist, -3, 3, add = TRUE, col = "red")
 ### Konfidenz Intervalle (CI)
 
 Gleichermaßen können wir mit der t-Verteilung
-95% Konfidenz Intervalle berechnen.
+95% Konfidenzintervalle berechnen.
 
-Das 95% Konfidenz Intervall eines Sample-Mittelwerts
+Das 95% Konfidenzintervall eines Sample-Mittelwerts
 umschließt den wahren Mittelwert (den Mittelwert der Gesamtpopulation)
 in 95% der Fälle (wenn Du das Experiment unendlich oft wiederholen würdest).
 
@@ -292,13 +292,13 @@ wilcox.test(wt, ko)
 ### Type I: False Positives
 
 Ein Typ I Fehler würde bedeuten, dass wir sagen, ein Unterschied
-zwischen den Gruppen exisitiere,
+zwischen den Gruppen existiere,
 obwohl alle Werte aus der gleichen Verteilung stammen und daher kein
 Unterschied besteht.
 
 Bei einem P-Value von $\leq$ 0.05 (= 5\ %) wird typischerweise
-gesagt, dass ein "statistisch siginifakter" Unterschied besteht.
-Mit diesem tpyischen Cutoff von 0.05 akzeptieren
+gesagt, dass ein "statistisch signifikanter" Unterschied besteht.
+Mit diesem typischen Cutoff von 0.05 akzeptieren
 wir also, allein durch unsere Definition, bereits (mindestens)
 5\ % falsch Positive.
 
@@ -363,7 +363,7 @@ wilcox.test(draw1,  draw2)
 
 ### Statistical Power
 
-Als statistische Power bezeichnen wir die Wahrscheinlichkeit eines Tests, einenen wahren Unterschied
+Als statistische Power bezeichnen wir die Wahrscheinlichkeit eines Tests, einen wahren Unterschied
 zwischen Gruppen bei dem gewählten $\alpha$ auch tatsächlich als statistisch signifikant zu kennzeichnen
 und damit ein wahr positives Ergebnis zu produzieren.
 
@@ -372,7 +372,7 @@ $$Power = 1-\beta$$
 Für den T-Test können wir in R die folgende Funktion verwenden, die uns hier beispielsweise
 die Frage beantwortet: "Wie viele Proben muss ich pro Gruppe (mindestens) nehmen,
 um einen erwarteten Unterschied der Mittelwerte von 1 mit einer Standardabweichung von 1
-in 80% der Fälle auch tasächlich als solchen zu erkennen?"
+in 80% der Fälle auch tatsächlich als solchen zu erkennen?"
 
 ```{r}
 # show power.t.test
@@ -552,7 +552,7 @@ curve(sd(wt)/sqrt(x), add = TRUE, col = "red")
 # talk about difference between sample sd and population sd
 ```
 
-#### Ein 95% Konfidenzinterval eines Samples enthält den Populationsmittelwert mit einer Wahrscheinlichkeit von 95%.
+#### Ein 95% Konfidenzintervall eines Samples enthält den Populationsmittelwert mit einer Wahrscheinlichkeit von 95%.
 
 - Ziehe 30 Zellen aus dem wt (oder ko) Vektor
 - Berechne die Limits des CI (Confidence Interval)
