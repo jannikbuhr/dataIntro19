@@ -1,0 +1,1 @@
+sem <- function(x) sd(x) / length(x)
