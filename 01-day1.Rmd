@@ -1,226 +1,270 @@
-# And Go! {#day1}
+# Los Geht's {#day1}
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(eval = FALSE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(eval = TRUE, warning = FALSE, message = FALSE)
 ```
 
-<!-- Slides! -->
+## Grundlegend Strukturen in R
 
-## Basic Datastructures in R
+Da R eine Programmiersprache ist befassen wir uns zunächst
+mit der grundlegenden Syntax sowie den basis-Datenstrukturen,
+in denen wir Daten in R vorfinden können.
 
-Because R is a programming language, we first look into
-some basic concepts and data structures before diving
-into the fun part.
+Öffne ein R-Script (eine Textdatei mit der Endung `.R`; In RStudio der Button oben
+links, oder der Shortcut Ctrl+Shift+N)^[Für Mac-Nutzer wird Ctrl durch Cmd ersetzt].
+Nun kannst du die folgenden Befehle selbst ausprobieren, indem du sie in das
+Script schreibst (oder kopierst) und mit dem Shortcut Ctrl+Enter
+in die Konsole schickst. Dort wird dann die ausgewählte Zeile / der markierte Code ausgeführt und das Ergebnis angezeigt.
 
-<!-- Open a new R-Script. -->
-
-<!-- R and RStudio -->
-
-<!-- Explanation, shortcut, mac vs pc -->
-
-<!-- Inspired by [learnXinYminutes](https://learnxinyminutes.com/docs/r/). -->
-
-Explain relevance of this section, 
+Inspiriert wurde diese Zusammenfassung von [learnXinYminutes](https://learnxinyminutes.com/docs/r/). Die aufgeführten
+Konzept liegen der Funktionsweise von R zu Grunde, dennoch ist
+tieferes Verständnis nicht zwingend notwendig, um effektiv mit
+Werkzeugen wie den Packages des `tidyverse` zu arbeiten. Daher: nicht verzweifeln,
+wenn unweigerlich etwas nicht funktioniert! Das ist völlig normal.
+Selbst erfahrene Programmierer stolpern regelmäßig über
+fehlende Kommata oder Klammern.
 
 ```{r googling, echo=FALSE, fig.cap="The most important programming advice."}
 knitr::include_graphics("img/errors.jpg")
 ```
 
-### Math with R
+### Rechnen
 
 ```{r}
-# comments start in the "#" symbol
-# they do nothing
+# Kommentare starten mit dem #-Symbol.
+# Diese Zeilen tun also nichts.
+# Aber erinnern Dein zukünftiges Ich daran, was du eigentlich vor hattest
 ```
 
-<!-- datatypes -->
-
-<!-- executing code -->
+Zahlen in R können als ganze Zahlen (_integer_),
+rationale Zahlen (_numeric_ oder auch _double_) oder, wenn
+auch selten verwendet, als komplexe Zahlen (_complex_) vorliegen.
+Zusätzlich gibt es noch text (_character_) und Wahr/Falsch (_boolean_ oder auch _logical_)
+sowie kategorische Daten (_factor_), `NULL` und Not Assigned (`NA`).
 
 ```{r, eval=FALSE}
-# Integer
+# Integer (gekennzeichnet mit L hinter der Zahl)
+5L
 # Numeric
+5
+5.3
 # Complex 
-# Character
+3 + 4i
+# Character (doppelte oder einfache Anführungszeichen sind erlaubt)
+"Horatio"
+'Horatio'
 # logical
+TRUE | FALSE
 # factor
 # The factor class is for categorical data
 # Factors can be ordered (like grade levels) or unordered (like gender)
+factor(c("f", "m", "m", NA, "f", "nb"))
 # NULL
+NULL
 ```
 
-<!-- variables -->
-
-<!-- intuition -->
+Werte können Variablen zugewiesen werden, um später Zugriff darauf zu haben.
 
 ```{r}
-# allowed names, capitalization
+# Namen in R dürfen Buchstaben und Zahlen sowie _ enthalten.
+# Großschreibung macht einen Unterschied
+avogadro <- 6.02e23
 
-# other ways to assign: =, ->
+# Neben der normalen Art der Zuweisung ( mit <- )
+# funktioniert auch Folgendes
+eulers_number = 2.718282
+"Harry Potter" -> main_character
 ```
 
-<!-- getting the content of a variable -->
+Den Inhalt der Variable erhältst du, indem du nur den die Variable
+in der Konsole ausführst oder mit Ctrl+Enter in die Konsole schickst:
 
 ```{r}
-# implicitly a shortcut for print(main_character)
+# Implizit ist es eine Abkürzung für print(main_character)
 main_character
 ```
 
-<!-- basic math -->
+Grundlegende Rechenfunktionen:
 
 ```{r, eval=FALSE}
-# + - * / %/% %% 
-# NaN
+10L + 66L
+53.2 - 4
+2.0 * 2L
+3L / 4L
+5 %/% 2 # Modulo
+5 %% 2  # Rest
+0 / 0   # NaN = Not a Number
 ```
 
-### Functions and Vectors
+### Funktionen und Vektoren
 
-<!-- importance of functions -->
-
-<!-- functions and mathematical functions -->
+Funktionen sind mit das Wichtigste in einer Programmiersprache.
+Funktionen in R erkennst du an den Klammern, zwischen die die Argumente/Parameter
+der Funktion gehören. Gemeint sind nicht nur mathematische Funktionen,
+alles, das etwas tut, ist eine Funktion.
 
 ```{r}
-# e.g. sin
-sin(1/2 * pi)
-
+sin(pi / 2)
 ```
 
-<!-- `?funktion`, F1 -->
+`?funktion` öffnet die **Hilfe** zu dieser Funktion (in RStudio rechts unten)
+und ist damit der wohl wichtigste Befehl überhaupt. Noch schneller
+ist der Shortcut **F1**, wenn der Cursor über einer Funktion ist.
+Niemand merkt sich alle Befehle, also nutzte die Hilfe reichlich!
+
+```{r, eval=FALSE}
+?sin
+```
+
+Alle Werte in R, selbst einzelne, sind Vektoren, also
+eine Reihe Dinge der gleichen Art. Die meisten
+Operationen in R arbeiten automatisch elementeweise mit Vektoren.
 
 ```{r}
-
+# c steht für combine oder concatenate
+vector1 <- c(3, 3, 3, 2, 2)
+vector2 <- vector1 + vector1
+vector2
 ```
-
-<!-- everything in R is a vector -->
 
 ```{r}
-# c for combine or concatenate
-
+vector1 * 2
 ```
 
-<!-- vectorisation of operations -->
+Der `:` Operator erstellt einen Vektor mit den Zahlen
+von a bis b für `a:b`. Mehr Kontrolle bietet die Funktion `seq` für _sequence_.
 
 ```{r}
-
+viele_zahlen  <- 1:1000
+gerade_zahlen <- seq(from = 2, to = 1000, by = 2)
 ```
 
-The `:` operator and `seq`
-
-```{r}
-
-```
-
-<!-- logical comparisons -->
-
-<!-- also elementwise -->
+Vergleiche zwischen Elementen/Dingen:
 
 ```{r, eval = FALSE}
-
-
+TRUE == FALSE # Vergleich, Ergebnis ist FALSE
+TRUE != FALSE # Ungleich, TRUE
+1 < 3         # TRUE
+FALSE | TRUE  # Oder
+FALSE & TRUE  # Und
+# Applying | and & to vectors returns elementwise logic operations
+c(TRUE,FALSE,FALSE) | c(FALSE,TRUE,FALSE)
 ```
 
+Hier noch einmal die Erinnerung, dass eine Fehlermeldung kein Weltuntergang ist.
+In diesem Code ist beispielsweise ein Komma zu viel:
 
-<!-- periodic reminder: error messages are your friends and completely normal -->
+```{r, error=TRUE}
+c(1,3,)
+```
+
+Im Zweifel gilt immer der Rat aus Abbildung \@ref(fig:googling).
+
+Bei der Kombination von unterschiedlichen Datentypen
+wird automatisch der gewählt, der mehr zulässt.
 
 ```{r}
-# e.g. c(1,2,)
-
+c(1.4, 5L)
+c(12, "text")
+# Oder explizit:
+as.character(12)
+as.integer("12")
 ```
 
-<!-- combination of different datatypes -->
-
-```{r}
-# implicit
-
-# explicit
-
-```
-
-<!-- write your own first function -->
+Du kannst deine eigenen Funktionen definieren:
 
 ```{r}
 ## Everything that does something is a function, everything that exists is an object
-
-# greet
+greet <- function(name) {
+  paste("Good morning", name)
+}
+greet("Jannik")
 ```
 
-### Datastructures
+### Datenstrukturen
 
-1D, same datatype: **vector**
+1D, gleicher Datentype: **Vector**
 
-```{r}
-# make vector
-
+```{r, eval=FALSE}
+vec <- c(8, 9, 10, 11)
 # We ask for specific elements by subsetting with square brackets []
 # (Note that R starts counting from 1)
-
-# subsetting with logical vector
-
-# or with indices
-# which
-
+vec[1]
+letters[18]
+letters[1:3]
+# Subsetting mit einem logical vector
+selectThis <- vec %% 2 == 0
+vec[selectThis]
+# Oder mit den Indices
+vec[which(vec %% 2 == 0)]
 ```
 
-usefull functions for vectors
+Praktische Funtionen für Vektoren:
 
-```{r}
+```{r, eval=FALSE}
 # grab just the first or last few entries in the vector,
-
-
+head(vec)
+tail(vec, 2)
 # or figure out if a certain value is in the vector
-
-
+any(vec == 10)
 # If an index "goes over" you'll get NA:
-
-
+vec[6]
 # You can find the length of your vector with length()
-
-
+length(vec)
 # You can perform operations on entire vectors or subsets of vectors
-
-
+vec = vec * 4
+vec[2:3] * 5
+any(vec[2:3] == 8)
 # and R has many built-in functions to summarize vectors
-# mean, min, max, sum
-
-
+mean(vec)
+median(vec)
+var(vec)
+sd(vec)
+max(vec)
+min(vec)
+sum(vec)
 ```
 
-1D, different datatypes: **list**
+1D, beliebige Datentypen: **List**
 
-```{r}
-# create list
-
-# single [] subsetting
-
-# double [[]] subsetting
-
-# lists and vectors can have names
-
-# using the names for subsetting
+```{r,eval=FALSE}
+meine_liste <- list(12, 'dog', 1:10)
+# Einfache [] geben eine Teilliste zurück
+meine_liste[2]
+# Doppelte [[]] geben das Element der List (entpackt aus der Liste) zurück
+meine_liste[[2]]
+# Listen und Vektoren können Namen haben
+names(meine_liste) <- c("zahl", "hund", "vector")
+# Die Namen identifizieren die Elemente und $ gibt das entsprechende Element zurück
+meine_liste$zahl
+meine_liste$vector
 ```
 
-2D, same Datentyp: **matrix**
+2D, gleicher Datentyp: **matrix**
 
-```{r}
-# matrix
-
+```{r,eval=FALSE}
+# You can make a matrix out of entries all of the same type like so:
+mat      <- matrix(nrow = 3, c(1,2,3,4,5,6), byrow = TRUE )
+myMatrix <- matrix(ncol = 2, c(1,2,3,4))
 # Ask for the first row
-
+mat[1:2, ]
 # Perform operation on the first column
-
+3 * mat[, 1]
 # Ask for a specific cell
-
+mat[3,2]
 # Transpose the whole matrix
-
+t(mat)
 # Matrix multiplication
-
+mat %*% t(mat)
 # cbind() sticks vectors together column-wise to make a matrix
-
+mat2 <- cbind(1:4, c("dog", "cat", "bird", "dog"))
+# Because matrices must contain entries all of the same class,
+# everything got converted to the character class
 # rbind() sticks vectors together row-wise to make a matrix
-
+mat3 <- rbind(c(1,2,4,5), c(6,7,0,4))
 ```
 
-2D, different datatypes: **data.frame**
+2D, beliebige Datentypen: **data.frame**
 
 ```{r}
 students <- data.frame(c("Cedric","Fred","George","Cho","Draco","Ginny"),
@@ -230,27 +274,28 @@ students <- data.frame(c("Cedric","Fred","George","Cho","Draco","Ginny"),
 names(students) <- c("name", "year", "house") # name the columns
 ```
 
-usefull functions for dataframes
+```{r, eval=FALSE}
+nrow(students)
+ncol(students)
+dim(students)
 
-```{r}
-# nrow, ncol, dim
-
-# parameter stringsAsFactors
+# The data.frame() function converts character vectors to factor vectors
+# by default; turn this off by setting stringsAsFactors = FALSE when
+# you create the data.frame
+?data.frame
 
 # There are many ways to subset data frames
 # See if you can find out what each of these lines does
-# dollar
-
-# vector
-
-# character
-
+students$year
+students[ , -c(1,3)]
+students[, "year"]
 ```
 
-Almost as usefula as `?`: the function `str` for _structure_
+Eine fast so hilfreiche Funktion wie die Hilfe über `?` ist die
+Funktion `str` für _structure_
 
 ```{r}
-# str
+str(students)
 ```
 
 ### Die ersten Plots

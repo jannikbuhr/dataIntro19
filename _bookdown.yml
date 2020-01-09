@@ -1,7 +1,10 @@
 book_filename: "dataIntro19"
-repo: https://github.com/jannikbuhr/dataIntro19Master
-output_dir: ../../jmbuhr/jmbuhr_source/static/books/dataIntro19Master
+repo: https://github.com/jannikbuhr/dataIntro19
+output_dir: ../../jmbuhr/jmbuhr_source/static/books/dataIntro19
 delete_merged_file: true
 language:
+  label:
+    fig: "Abb. "
+    tab: "Tab. "
   ui:
-    chapter_name: "Day "
+    chapter_name: "Tag "

@@ -1,7 +1,7 @@
 # Tidy Data, Visualisierung und Statistische Größen {#day3}
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(eval = FALSE, echo = FALSE)
+knitr::opts_chunk$set(eval = TRUE)
 ```
 
 ## Wiederholung Tag 2
