@@ -1,13 +1,7 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
-
 # Statistische Tests und Power {#day4}
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(eval = FALSE, echo = FALSE)
 ```
 
 ## Lösung für Tag 3

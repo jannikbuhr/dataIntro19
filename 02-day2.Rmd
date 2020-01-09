@@ -7,7 +7,7 @@ editor_options:
 # An die Daten {#day2}
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(eval = FALSE, echo = FALSE)
 ```
 
 ## Wiederholung Tag 1
