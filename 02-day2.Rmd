@@ -1,14 +1,4 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
-
 # An die Daten {#day2}
-
-```{r include=FALSE}
-knitr::opts_chunk$set(eval = TRUE)
-```
 
 ## Wiederholung Tag 1
 
