@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>References | Einführung in die Datenauswertung mit R</title>
+  <meta name="description" content="Datenauswertung für Biochemiker, eine Einführung mit R" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="References | Einführung in die Datenauswertung mit R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Datenauswertung für Biochemiker, eine Einführung mit R" />
+  <meta name="github-repo" content="jannikbuhr/dataIntro19" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="References | Einführung in die Datenauswertung mit R" />
+  
+  <meta name="twitter:description" content="Datenauswertung für Biochemiker, eine Einführung mit R" />
+  
+
+<meta name="author" content="Jannik Buhr" />
+
+
+<meta name="date" content="2020-11-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="day6.html"/>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://jmbuhr.de/dataIntro19/">Einführung in die Datenauswertung mit R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prolog</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#vorbereitung-auf-den-kurs"><i class="fa fa-check"></i><b>0.1</b> Vorbereitung auf den Kurs</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#aufbau-des-kurses"><i class="fa fa-check"></i><b>0.2</b> Aufbau des Kurses</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#inhalt-des-kurses"><i class="fa fa-check"></i><b>0.3</b> Inhalt des Kurses</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#resourcen"><i class="fa fa-check"></i><b>0.4</b> Resourcen</a>
+<ul>
+<li class="chapter" data-level="0.4.1" data-path="index.html"><a href="index.html#tidyverse"><i class="fa fa-check"></i><b>0.4.1</b> Tidyverse</a></li>
+<li class="chapter" data-level="0.4.2" data-path="index.html"><a href="index.html#allgemein-r"><i class="fa fa-check"></i><b>0.4.2</b> Allgemein R</a></li>
+<li class="chapter" data-level="0.4.3" data-path="index.html"><a href="index.html#statistic"><i class="fa fa-check"></i><b>0.4.3</b> Statistic</a></li>
+<li class="chapter" data-level="0.4.4" data-path="index.html"><a href="index.html#talks-podcasts-blogs"><i class="fa fa-check"></i><b>0.4.4</b> Talks, Podcasts, Blogs</a></li>
+<li class="chapter" data-level="0.4.5" data-path="index.html"><a href="index.html#misc"><i class="fa fa-check"></i><b>0.4.5</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#sonstige-quellen"><i class="fa fa-check"></i><b>0.5</b> Sonstige Quellen</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="day1.html"><a href="day1.html"><i class="fa fa-check"></i><b>1</b> Los Geht’s</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="day1.html"><a href="day1.html#grundlegend-strukturen-in-r"><i class="fa fa-check"></i><b>1.1</b> Grundlegend Strukturen in R</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="day1.html"><a href="day1.html#rechnen"><i class="fa fa-check"></i><b>1.1.1</b> Rechnen</a></li>
+<li class="chapter" data-level="1.1.2" data-path="day1.html"><a href="day1.html#funktionen-und-vektoren"><i class="fa fa-check"></i><b>1.1.2</b> Funktionen und Vektoren</a></li>
+<li class="chapter" data-level="1.1.3" data-path="day1.html"><a href="day1.html#datenstrukturen"><i class="fa fa-check"></i><b>1.1.3</b> Datenstrukturen</a></li>
+<li class="chapter" data-level="1.1.4" data-path="day1.html"><a href="day1.html#die-ersten-plots"><i class="fa fa-check"></i><b>1.1.4</b> Die ersten Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="day1.html"><a href="day1.html#project-based-workflow"><i class="fa fa-check"></i><b>1.2</b> Project-based Workflow</a></li>
+<li class="chapter" data-level="1.3" data-path="day1.html"><a href="day1.html#packages-das-tidyverse"><i class="fa fa-check"></i><b>1.3</b> Packages: Das Tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="day2.html"><a href="day2.html"><i class="fa fa-check"></i><b>2</b> An die Daten</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="day2.html"><a href="day2.html#wiederholung-tag-1"><i class="fa fa-check"></i><b>2.1</b> Wiederholung Tag 1</a></li>
+<li class="chapter" data-level="2.2" data-path="day2.html"><a href="day2.html#workflow-einer-datenauswertung"><i class="fa fa-check"></i><b>2.2</b> Workflow einer Datenauswertung</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="day2.html"><a href="day2.html#communication"><i class="fa fa-check"></i><b>2.2.1</b> Communication!</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="day2.html"><a href="day2.html#daten-einlesen"><i class="fa fa-check"></i><b>2.3</b> Daten einlesen</a></li>
+<li class="chapter" data-level="2.4" data-path="day2.html"><a href="day2.html#the-pipe-and-dplyr-verbs"><i class="fa fa-check"></i><b>2.4</b> The pipe and dplyr verbs</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="day2.html"><a href="day2.html#select"><i class="fa fa-check"></i><b>2.4.1</b> select</a></li>
+<li class="chapter" data-level="2.4.2" data-path="day2.html"><a href="day2.html#filter"><i class="fa fa-check"></i><b>2.4.2</b> filter</a></li>
+<li class="chapter" data-level="2.4.3" data-path="day2.html"><a href="day2.html#mutate"><i class="fa fa-check"></i><b>2.4.3</b> mutate</a></li>
+<li class="chapter" data-level="2.4.4" data-path="day2.html"><a href="day2.html#arrange"><i class="fa fa-check"></i><b>2.4.4</b> arrange</a></li>
+<li class="chapter" data-level="2.4.5" data-path="day2.html"><a href="day2.html#count"><i class="fa fa-check"></i><b>2.4.5</b> count</a></li>
+<li class="chapter" data-level="2.4.6" data-path="day2.html"><a href="day2.html#summarise"><i class="fa fa-check"></i><b>2.4.6</b> summarise</a></li>
+<li class="chapter" data-level="2.4.7" data-path="day2.html"><a href="day2.html#group_by-und-summarise"><i class="fa fa-check"></i><b>2.4.7</b> group_by und summarise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="day2.html"><a href="day2.html#was-ist-wahrscheinlichkeit"><i class="fa fa-check"></i><b>2.5</b> Was ist Wahrscheinlichkeit?</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="day2.html"><a href="day2.html#beispiel"><i class="fa fa-check"></i><b>2.5.1</b> Beispiel:</a></li>
+<li class="chapter" data-level="2.5.2" data-path="day2.html"><a href="day2.html#p-values"><i class="fa fa-check"></i><b>2.5.2</b> P-Values</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="day2.html"><a href="day2.html#transfer-auf-neue-daten"><i class="fa fa-check"></i><b>2.6</b> Transfer auf neue Daten</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="day2.html"><a href="day2.html#übung"><i class="fa fa-check"></i><b>2.6.1</b> Übung</a></li>
+<li class="chapter" data-level="2.6.2" data-path="day2.html"><a href="day2.html#lösungen"><i class="fa fa-check"></i><b>2.6.2</b> Lösungen</a></li>
+<li class="chapter" data-level="2.6.3" data-path="day2.html"><a href="day2.html#bonus"><i class="fa fa-check"></i><b>2.6.3</b> Bonus</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="day3.html"><a href="day3.html"><i class="fa fa-check"></i><b>3</b> Tidy Data, Visualisierung und Statistische Größen</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="day3.html"><a href="day3.html#wiederholung-tag-2"><i class="fa fa-check"></i><b>3.1</b> Wiederholung Tag 2</a></li>
+<li class="chapter" data-level="3.2" data-path="day3.html"><a href="day3.html#visualisierung-als-schlüssel-zum-verständnis"><i class="fa fa-check"></i><b>3.2</b> Visualisierung als Schlüssel zum Verständnis</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="day3.html"><a href="day3.html#anscombes-quartet"><i class="fa fa-check"></i><b>3.2.1</b> Anscombes Quartet</a></li>
+<li class="chapter" data-level="3.2.2" data-path="day3.html"><a href="day3.html#exkurs-tidy-data"><i class="fa fa-check"></i><b>3.2.2</b> Exkurs Tidy Data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="day3.html"><a href="day3.html#the-datasaurus-dozen"><i class="fa fa-check"></i><b>3.2.3</b> The Datasaurus Dozen</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="day2.html"><a href="day2.html#übung"><i class="fa fa-check"></i><b>3.3</b> Übung</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="day3.html"><a href="day3.html#inclusion-bodies"><i class="fa fa-check"></i><b>3.3.1</b> Inclusion Bodies</a></li>
+<li class="chapter" data-level="3.3.2" data-path="day3.html"><a href="day3.html#lösung"><i class="fa fa-check"></i><b>3.3.2</b> Lösung</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="day4.html"><a href="day4.html"><i class="fa fa-check"></i><b>4</b> Statistische Tests und Power</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="day4.html"><a href="day4.html#lösung-für-tag-3"><i class="fa fa-check"></i><b>4.1</b> Lösung für Tag 3</a></li>
+<li class="chapter" data-level="4.2" data-path="day4.html"><a href="day4.html#der-zentrale-grenzwertsatz-clt"><i class="fa fa-check"></i><b>4.2</b> Der zentrale Grenzwertsatz (CLT)</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="day2.html"><a href="day2.html#daten-einlesen"><i class="fa fa-check"></i><b>4.2.1</b> Daten einlesen</a></li>
+<li class="chapter" data-level="4.2.2" data-path="day4.html"><a href="day4.html#der-einfache-fall"><i class="fa fa-check"></i><b>4.2.2</b> Der einfache Fall</a></li>
+<li class="chapter" data-level="4.2.3" data-path="day4.html"><a href="day4.html#abstraktion-für-viele-fälle"><i class="fa fa-check"></i><b>4.2.3</b> Abstraktion für viele Fälle</a></li>
+<li class="chapter" data-level="4.2.4" data-path="day4.html"><a href="day4.html#exkurs-lambda-funktionen"><i class="fa fa-check"></i><b>4.2.4</b> Exkurs: Lambda-Funktionen</a></li>
+<li class="chapter" data-level="4.2.5" data-path="day4.html"><a href="day4.html#populationsverteilung-vs.-verteilung-der-mittelwerte"><i class="fa fa-check"></i><b>4.2.5</b> Populationsverteilung vs. Verteilung der Mittelwerte</a></li>
+<li class="chapter" data-level="4.2.6" data-path="day4.html"><a href="day4.html#exkurs-quantiles"><i class="fa fa-check"></i><b>4.2.6</b> Exkurs: Quantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="day4.html"><a href="day4.html#die-t-verteilung"><i class="fa fa-check"></i><b>4.3</b> Die T-Verteilung</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="day4.html"><a href="day4.html#konfidenz-intervalle-ci"><i class="fa fa-check"></i><b>4.3.1</b> Konfidenz Intervalle (CI)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="day4.html"><a href="day4.html#signifikanztests"><i class="fa fa-check"></i><b>4.4</b> Signifikanztests</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="day4.html"><a href="day4.html#students-t-test"><i class="fa fa-check"></i><b>4.4.1</b> Students T-Test</a></li>
+<li class="chapter" data-level="4.4.2" data-path="day4.html"><a href="day4.html#wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>4.4.2</b> Wilcoxon Rank Sum Test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="day4.html"><a href="day4.html#type-i-und-type-ii-errors"><i class="fa fa-check"></i><b>4.5</b> Type I und Type II Errors</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="day4.html"><a href="day4.html#type-i-false-positives"><i class="fa fa-check"></i><b>4.5.1</b> Type I: False Positives</a></li>
+<li class="chapter" data-level="4.5.2" data-path="day4.html"><a href="day4.html#type-ii-errors"><i class="fa fa-check"></i><b>4.5.2</b> Type II errors</a></li>
+<li class="chapter" data-level="4.5.3" data-path="day4.html"><a href="day4.html#statistical-power"><i class="fa fa-check"></i><b>4.5.3</b> Statistical Power</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="day4.html"><a href="day4.html#probleme"><i class="fa fa-check"></i><b>4.6</b> Probleme</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="day4.html"><a href="day4.html#the-jelly-bean-problem-multiple-testing"><i class="fa fa-check"></i><b>4.6.1</b> The Jelly Bean Problem (Multiple Testing)</a></li>
+<li class="chapter" data-level="4.6.2" data-path="day4.html"><a href="day4.html#the-base-rate-fallacy"><i class="fa fa-check"></i><b>4.6.2</b> The Base Rate Fallacy</a></li>
+<li class="chapter" data-level="4.6.3" data-path="index.html"><a href="index.html#resourcen"><i class="fa fa-check"></i><b>4.6.3</b> Resourcen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="day4.html"><a href="day4.html#übungen"><i class="fa fa-check"></i><b>4.7</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="day4.html"><a href="day4.html#zeige-die-folgenden-statements-anhand-von-simulationen-in-r"><i class="fa fa-check"></i><b>4.7.1</b> Zeige die folgenden Statements anhand von Simulationen in R</a></li>
+<li class="chapter" data-level="4.7.2" data-path="day4.html"><a href="day4.html#veranschauliche-die-folgenden-konzepte-anhand-von-simulationen-auf-den-vorliegenden-daten"><i class="fa fa-check"></i><b>4.7.2</b> Veranschauliche die folgenden Konzepte anhand von Simulationen auf den vorliegenden Daten</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day5.html"><a href="day5.html"><i class="fa fa-check"></i><b>5</b> Korrelation und Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="day5.html"><a href="day5.html#lösung-tag-4"><i class="fa fa-check"></i><b>5.1</b> Lösung Tag 4</a></li>
+<li class="chapter" data-level="5.2" data-path="day5.html"><a href="day5.html#korrelation-und-regression"><i class="fa fa-check"></i><b>5.2</b> Korrelation und Regression</a></li>
+<li class="chapter" data-level="5.3" data-path="day5.html"><a href="day5.html#tricks-für-viele-daten-dateien"><i class="fa fa-check"></i><b>5.3</b> Tricks für viele Daten / Dateien</a></li>
+<li class="chapter" data-level="5.4" data-path="day5.html"><a href="day5.html#non-linear-regression"><i class="fa fa-check"></i><b>5.4</b> Non-Linear Regression</a></li>
+<li class="chapter" data-level="5.5" data-path="day2.html"><a href="day2.html#übung"><i class="fa fa-check"></i><b>5.5</b> Übung</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="day5.html"><a href="day5.html#mit-den-datasaurus-dozen-datensets"><i class="fa fa-check"></i><b>5.5.1</b> Mit den Datasaurus Dozen Datensets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="day6.html"><a href="day6.html"><i class="fa fa-check"></i><b>6</b> Folgt</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="day6.html"><a href="day6.html#lösung-tag-5"><i class="fa fa-check"></i><b>6.1</b> Lösung Tag 5</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="day5.html"><a href="day5.html#mit-den-datasaurus-dozen-datensets"><i class="fa fa-check"></i><b>6.1.1</b> Mit den Datasaurus Dozen Datensets</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="day6.html"><a href="day6.html#datenanalyse-beispiel-global-plastic-waste"><i class="fa fa-check"></i><b>6.2</b> Datenanalyse, Beispiel: Global Plastic Waste</a></li>
+<li class="chapter" data-level="6.3" data-path="day6.html"><a href="day6.html#feedbackrunde"><i class="fa fa-check"></i><b>6.3</b> Feedbackrunde</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in die Datenauswertung mit R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-rmarkdown" class="csl-entry">
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang und Richard Iannone. 2019. <em>rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.
+</div>
+<div id="ref-chang2013" class="csl-entry">
+Chang, Winston. 2013. <em>R <span>Graphics Cookbook</span>: <span>Practical Recipes</span> for <span>Visualizing Data</span></em>. 1 edition. <span>Beijing Cambridge Farnham Köln Sebastopol Tokyo</span>: <span>O’Reilly Media</span>.
+</div>
+<div id="ref-fisher1990" class="csl-entry">
+Fisher, R. A. und F. Yates. 1990. <em>Statistical <span>Methods</span>, <span>Experimental Design</span>, and <span>Scientific Inference</span>: <span>A Re</span>-Issue of <span>Statistical Methods</span> for <span>Research Workers</span>, <span>The Design</span> of <span>Experiments</span>, and <span>Statistical Methods</span> and <span>Scientific Inference</span></em>. Hg. von J. H. Bennett. 1 edition. <span>Oxford England ; New York</span>: <span>Oxford University Press</span>.
+</div>
+<div id="ref-grolemund2014" class="csl-entry">
+Grolemund, Garrett und Hadley Wickham. 2014. <em>Hands-<span>On Programming</span> with <span>R</span>: <span>Write Your Own Functions</span> and <span>Simulations</span></em>. <span>Sebastopol, CA</span>: <span>O’Reilly Media</span>. <a href="https://rstudio-education.github.io/hopr/">https://rstudio-education.github.io/hopr/</a>.
+</div>
+<div id="ref-healy2018" class="csl-entry">
+Healy, Kieran. 2018. <em>Data <span>Visualization</span>: <span>A Practical Introduction</span></em>. 1 edition. <span>Princeton, NJ</span>: <span>Princeton University Press</span>. <a href="https://socviz.co/index.html">https://socviz.co/index.html</a>.
+</div>
+<div id="ref-horst2019" class="csl-entry">
+Horst, Allison. 2019. R &amp; Stats Illustrations by @allison_horst. <span>Contribute</span> to Allisonhorst/Stats-Illustrations Development by Creating an Account on <span>GitHub</span>. August. <a href="https://github.com/allisonhorst/stats-illustrations">https://github.com/allisonhorst/stats-illustrations</a> (zugegriffen: 26. August 2019).
+</div>
+<div id="ref-kim2019" class="csl-entry">
+Kim, Chester Ismay and Albert Y. 2019. <em>Statistical <span>Inference</span> via <span>Data Science</span></em>. <span>CRC Press</span>. <a href="https://moderndive.com/">https://moderndive.com/</a> (zugegriffen: 25. August 2019).
+</div>
+<div id="ref-matejka2017a" class="csl-entry">
+Matejka, Justin und George Fitzmaurice. 2017. Same <span>Stats</span>, <span>Different Graphs</span>: <span>Generating Datasets</span> with <span>Varied Appearance</span> and <span>Identical Statistics Through Simulated Annealing</span>. In: <em>Proceedings of the 2017 <span>CHI Conference</span> on <span>Human Factors</span> in <span>Computing Systems</span></em>, 1290–1294. <span>CHI</span> ’17. <span>New York, NY, USA</span>: <span>ACM</span>. doi:<a href="https://doi.org/10.1145/3025453.3025912">10.1145/3025453.3025912</a>, <a href="http://doi.acm.org/10.1145/3025453.3025912">http://doi.acm.org/10.1145/3025453.3025912</a> (zugegriffen: 27. August 2019).
+</div>
+<div id="ref-motulsky2017" class="csl-entry">
+Motulsky, Harvey. 2017. <em>Intuitive <span>Biostatistics</span>: <span>A Nonmathematical Guide</span> to <span>Statistical Thinking</span></em>. 4 edition. <span>New York</span>: <span>Oxford University Press</span>.
+</div>
+<div id="ref-R-base" class="csl-entry">
+R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-reinhart2015" class="csl-entry">
+Reinhart, Alex. 2015. <em>Statistics <span>Done Wrong</span>: <span>The Woefully Complete Guide</span></em>. 1 edition. <span>San Francisco</span>: <span>No Starch Press</span>.
+</div>
+<div id="ref-wickham2015" class="csl-entry">
+Wickham, Hadley. 2015. <em>R <span>Packages</span>: <span>Organize</span>, <span>Test</span>, <span>Document</span>, and <span>Share Your Code</span></em>. 1 edition. <span>Sebastopol, CA</span>: <span>O’Reilly Media</span>. <a href="http://r-pkgs.had.co.nz/">http://r-pkgs.had.co.nz/</a>.
+</div>
+<div id="ref-wickham2019" class="csl-entry">
+---. 2019. <em>Advanced <span>R</span>, <span>Second Edition</span></em>. 2 edition. <span>Boca Raton</span>: <span>Chapman and Hall/CRC</span>. <a href="https://adv-r.hadley.nz/">https://adv-r.hadley.nz/</a>.
+</div>
+<div id="ref-wickhamDataScienceImport2017" class="csl-entry">
+Wickham, Hadley und Garrett Grolemund. 2017. <em>R for <span>Data Science</span>: <span>Import</span>, <span>Tidy</span>, <span>Transform</span>, <span>Visualize</span>, and <span>Model Data</span></em>. 1 edition. <span>Sebastopol, CA</span>: <span>O’Reilly Media</span>. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.
+</div>
+<div id="ref-xie2015" class="csl-entry">
+Xie, Yihui. 2015. <em>Dynamic Documents with <span>R</span> and knitr</em>. 2nd Aufl. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/">http://yihui.name/knitr/</a>.
+</div>
+<div id="ref-R-bookdown" class="csl-entry">
+---. 2019a. <em>bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
+</div>
+<div id="ref-R-knitr" class="csl-entry">
+---. 2019b. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://CRAN.R-project.org/package=knitr">https://CRAN.R-project.org/package=knitr</a>.
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="day6.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="https://jmbuhr.de/books/dataIntro19/">Einführung in die Datenauswertung mit R</a></li>
+        <li><a href="https://jmbuhr.de/dataIntro19/">Einführung in die Datenauswertung mit R</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     sharing:
